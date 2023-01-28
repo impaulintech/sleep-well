@@ -27,6 +27,7 @@ const SignUp: NextPage = (): JSX.Element => {
           <Input
             name="password"
             label="Password"
+            type="password"
             placeholder="••••••••••"
           ></Input>
           <div className="flex w-full mt-4 justify-center font-medium text-xs">
