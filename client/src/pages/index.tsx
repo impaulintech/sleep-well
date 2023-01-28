@@ -1,8 +1,4 @@
-import Head from 'next/head';
-import { Inter } from '@next/font/google';
-import styles from '@/styles/Home.module.css';
-
-const inter = Inter({ subsets: ['latin'] });
+import Head from 'next/head'; 
 
 export default function Home()
 {
@@ -15,7 +11,7 @@ export default function Home()
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className='text-center flex justify-center items-center font-bold text-5xl text-white min-h-screen h-full bg-black'>
-        <span>Sleep Well</span>
+        <span className='text-btn-2'>Sleep Well</span>
       </main>
     </>
   );
