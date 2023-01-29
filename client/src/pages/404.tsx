@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import Router from "next/router";
 import { useEffect, useState } from "react";
 
-import Button from "~/components/atoms/Button";
 import Image from "next/image";
+import redirect from "~/shared/utils/redirect";
+import Button from "~/components/atoms/Button";
 
 const NotFound: NextPage = (): JSX.Element => {
   const [count, setCount] = useState(6);
@@ -17,12 +17,12 @@ const NotFound: NextPage = (): JSX.Element => {
 
   useEffect(() => {
     if (count === 0) {
-      Router.back();
+      redirect("/");
     }
   }, [count]);
 
   const handleClick = () => {
-    Router.back();
+    redirect("/");
   };
 
   return (
@@ -31,22 +31,22 @@ const NotFound: NextPage = (): JSX.Element => {
         <title>SleepWell | Page not found</title>
         <meta name="description" content="404 Page Not Found" />
       </Head>
-      <div className="flex flex-col h-screen justify-center space-y-10">
-        <div className="flex flex-col justify-center">
+      <div className="flex flex-col h-screen justify-center space-y-10 items-center">
+        <div className="flex flex-col justify-center items-center">
           <Image src="/images/Error.png" alt="error" width="400" height="400" />
           <div className="flex flex-col space-y-2">
-            <h1 className="text-center text-3xl font-semibold ">
+            <h1 className="text-center text-3xl font-semibold">
               Page not found!
             </h1>
-            <p className="font-medium text-xs">
+            <p className="font-medium text-xs text-center">
               This page will be redirected to the home page in{" "}
               <span className="text-failed">{count}s</span>.
             </p>
           </div>
         </div>
-        <div>
-          <Button handleClick={handleClick} name="Go back"></Button>
-        </div>
+        <Button handleClick={handleClick} className="max-w-[341px]">
+          Go Home
+        </Button>
       </div>
     </>
   );
