@@ -8,7 +8,7 @@ import Button from "~/components/atoms/Button";
 import Radio from "~/components/atoms/Radio";
 
 const Gender: NextPage = (): JSX.Element => {
-  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
   const options = [
     { name: "Male" },
@@ -16,6 +16,11 @@ const Gender: NextPage = (): JSX.Element => {
     { name: "Non-binary" },
     { name: "Prefer not to say" },
   ];
+
+  const handleOnchange = (e: any) => {
+    console.log(e)
+    setButtonDisabled(false)
+  };
 
   return (
     <div className="flex flex-col h-screen justify-between">
@@ -30,7 +35,7 @@ const Gender: NextPage = (): JSX.Element => {
           ></Image>
           <p className=" text-3xl font-semibold">What is your gender?</p>
         </section>
-        <Radio options={options} />
+        <Radio callback={handleOnchange} options={options} />
       </div>
       <div className="flex flex-col space-y-5 pb-16">
         <Button
