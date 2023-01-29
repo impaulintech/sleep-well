@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 import NextHead from "~/components/atoms/NextHead";
 import Input from "~/components/atoms/Input";
 import Button from "~/components/atoms/Button";
-import Link from "next/link";
 
 const SignUp: NextPage = (): JSX.Element => {
   return (
@@ -50,7 +50,7 @@ const SignUp: NextPage = (): JSX.Element => {
         </div>
       </div>
       <div className="pb-16">
-        <Button handleClick={() => {}} name="Sign Up"></Button>
+        <Button handleClick={() => {}}>Sign Up</Button>
       </div>
     </div>
   );

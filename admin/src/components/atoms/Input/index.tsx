@@ -16,7 +16,7 @@ const Input = ({ value, name, label, type = "text", placeholder }: IInput) => {
       </label>
       <input
         value={value}
-        className="flex items-center justify-start font-medium rounded border-swell-30 border-2 text-xs bg-white px-4 py-3"
+        className="flex items-center justify-start font-medium rounded border-swell-30 border-2 text-base bg-white px-4 py-3"
         type={type}
         id={name}
         placeholder={placeholder}

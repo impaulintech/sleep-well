@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import redirect from "~/shared/utils/redirect";
 import Button from "~/components/atoms/Button";
+import NextHead from "~/components/atoms/NextHead";
 
 const NotFound: NextPage = (): JSX.Element => {
   const [count, setCount] = useState(6);
@@ -27,10 +28,7 @@ const NotFound: NextPage = (): JSX.Element => {
 
   return (
     <>
-      <Head>
-        <title>SleepWell | Page not found</title>
-        <meta name="description" content="404 Page Not Found" />
-      </Head>
+      <NextHead title="SleepWell | Page not found"></NextHead>
       <div className="flex flex-col h-screen justify-center space-y-10 items-center">
         <div className="flex flex-col justify-center items-center">
           <Image src="/images/Error.png" alt="error" width="400" height="400" />

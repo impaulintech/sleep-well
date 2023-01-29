@@ -5,23 +5,18 @@ import LogoIcon from "~/shared/icons/LogoIcon";
 
 type Props = {
   title: string;
-  key?: string | undefined;
   children?: ReactNode;
-} & typeof defaultProps;
-
-const defaultProps = {
-  title: "",
-  key: "",
+  hasIcon?: boolean;
 };
 
 const NextHead: FC<Props> = (props): JSX.Element => {
-  const { title, key, children } = props;
+  const { title, children, hasIcon } = props;
 
   return (
     <>
-      <LogoIcon className="mt-5" />
+      {hasIcon && <LogoIcon className="mt-5" />}
       <Head>
-        <title key={`${key}`}>{`${title}`}</title>
+        <title>{`${title}`}</title>
         {children}
       </Head>
     </>
