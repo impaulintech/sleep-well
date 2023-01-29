@@ -41,7 +41,7 @@ const SignUp: NextPage = (): JSX.Element => {
             type="password"
             placeholder="••••••••••"
           ></Input>
-          <div className="flex w-full mt-4 justify-center font-medium text-xs">
+          <div className="flex w-full mt-4 justify-center font-medium text-base">
             <p>Already have an account?&nbsp;</p>
             <Link href="/login" className="text-swell-30">
               Login

@@ -10,7 +10,7 @@ type Props = {
 };
 
 const NextHead: FC<Props> = (props): JSX.Element => {
-  const { title, children, hasIcon } = props;
+  const { title, children, hasIcon = true } = props;
 
   return (
     <>

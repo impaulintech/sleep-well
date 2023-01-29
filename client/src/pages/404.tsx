@@ -28,23 +28,32 @@ const NotFound: NextPage = (): JSX.Element => {
 
   return (
     <>
-      <NextHead title="SleepWell | Page not found"></NextHead>
-      <div className="flex flex-col h-screen justify-center space-y-10 items-center">
-        <div className="flex flex-col justify-center items-center">
-          <Image src="/images/Error.png" alt="error" width="400" height="400" />
-          <div className="flex flex-col space-y-2">
-            <h1 className="text-center text-3xl font-semibold">
-              Page not found!
-            </h1>
-            <p className="font-medium text-xs text-center">
-              This page will be redirected to the home page in{" "}
-              <span className="text-failed">{count}s</span>.
-            </p>
+      <div className="absolute top-0">
+        <NextHead key="404" title="SleepWell | Page not found"></NextHead>
+      </div>
+      <div className="flex flex-col w-full items-center justify-center">
+        <div className="flex flex-col h-screen justify-center space-y-10">
+          <div className="flex flex-col justify-center">
+            <Image
+              src="/images/Error.png"
+              alt="error"
+              width="400"
+              height="400"
+            />
+            <div className="flex flex-col space-y-2">
+              <h1 className="text-center text-3xl font-semibold ">
+                Page not found!
+              </h1>
+              <p className="font-medium text-xs">
+                This page will be redirected to the home page in{" "}
+                <span className="text-failed">{count}s</span>.
+              </p>
+            </div>
+          </div>
+          <div>
+            <Button handleClick={handleClick}>Go back</Button>
           </div>
         </div>
-        <Button handleClick={handleClick} className="max-w-[341px]">
-          Go Home
-        </Button>
       </div>
     </>
   );
