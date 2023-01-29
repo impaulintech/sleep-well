@@ -1,13 +1,13 @@
 import { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 import NextHead from "~/components/atoms/NextHead";
 import Input from "~/components/atoms/Input";
 import Button from "~/components/atoms/Button";
-import Link from "next/link";
 
-const SignUp: NextPage = (): JSX.Element => {
+const Login: NextPage = (): JSX.Element => {
   return (
     <div className="flex flex-col h-screen justify-between">
       <div className="pb-10">
@@ -30,7 +30,7 @@ const SignUp: NextPage = (): JSX.Element => {
             type="password"
             placeholder="••••••••••"
           ></Input>
-          <div className="flex w-full mt-4 justify-center font-medium text-xs">
+          <div className="flex w-full mt-4 justify-center font-medium text-base">
             <p>Don&#39;t have an account yet?&nbsp;</p>
             <Link href="/sign-up" className="text-swell-30">
               Register
@@ -39,10 +39,10 @@ const SignUp: NextPage = (): JSX.Element => {
         </div>
       </div>
       <div className="pb-16">
-        <Button handleClick={() => {}} name="Login"></Button>
+        <Button handleClick={() => {}}>Login</Button>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default Login;

@@ -3,7 +3,7 @@ import React from "react";
 interface IButton {
   children: any;
   handleClick: () => void;
-  className: string;
+  className?: string;
 }
 
 const Button = (props: IButton) => {

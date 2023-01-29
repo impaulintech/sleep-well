@@ -1,9 +1,8 @@
-import Head from "next/head";
+import Image from "next/image";
+import Router from "next/router";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 
-import Image from "next/image";
-import redirect from "~/shared/utils/redirect";
 import Button from "~/components/atoms/Button";
 import NextHead from "~/components/atoms/NextHead";
 
@@ -18,12 +17,12 @@ const NotFound: NextPage = (): JSX.Element => {
 
   useEffect(() => {
     if (count === 0) {
-      redirect("/");
+      Router.push("/");
     }
   }, [count]);
 
   const handleClick = () => {
-    redirect("/");
+    Router.back();
   };
 
   return (
@@ -32,7 +31,7 @@ const NotFound: NextPage = (): JSX.Element => {
         <NextHead key="404" title="SleepWell | Page not found"></NextHead>
       </div>
       <div className="flex flex-col w-full items-center justify-center">
-        <div className="flex flex-col h-screen justify-center space-y-10">
+        <div className="flex flex-col h-screen justify-center space-y-10 sm:w-80 sm:h-full sm:mt-32">
           <div className="flex flex-col justify-center">
             <Image
               src="/images/Error.png"
