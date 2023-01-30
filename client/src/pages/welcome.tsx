@@ -1,65 +1,40 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { NextPage } from "next";
 
 import redirect from "~/shared/utils/redirect";
-import NextHead from "~/components/atoms/NextHead";
-import Button from "~/components/atoms/Button";
-import Checkbox from "~/components/atoms/Checkbox";
+import Intro from "~/components/organisms/Intro";
+import Info from "~/components/organisms/Info";
+import Gender from "~/components/organisms/Gender";
 
 const Welcome: NextPage = (): JSX.Element => {
-  const [isChecked, setIsChecked] = useState<boolean | undefined>(false);
+  const [activeComponent, setActiveComponent] = useState<string>("Intro");
 
-  const handleCheck = () => {
-    setIsChecked(!isChecked);
+  const [result, setResult] = useState<any>({});
+
+  const handleInput = (newValue: any) => {
+    setResult({ ...result, ...newValue });
   };
 
-  return (
-    <div className="flex flex-col h-screen justify-between">
-      <div className="pb-10">
-        <NextHead title="SleepWell | Welcome"></NextHead>
-        <section className="flex flex-col items-center mb-7">
-          <Image
-            src="/images/Thankyou.png"
-            alt="welcome"
-            width="205"
-            height="160"
-          ></Image>
-          <p className=" text-3xl font-semibold">Welcome to SleepWell</p>
-          <p className="text-base">A sleep cycle assessment app! </p>
-        </section>
-        <section className="space-y-6">
-          <p>
-            In order to provide you with the most accurate recommendations, we
-            will be collecting some additional information.{" "}
-          </p>
-          <p>
-            This information will be used to tailor our recommendations to your
-            specific needs.
-          </p>
-          <p>
-            We appreciate your participation and look forward to helping you
-            improve your sleep.
-          </p>
-        </section>
-      </div>
-      <div className="flex flex-col space-y-5 pb-16">
-        <Checkbox
-          handleClick={handleCheck}
-          name="welcome"
-          label="Yes, I agree."
-        ></Checkbox>
-        <Button
-          isDisabled={!isChecked}
-          handleClick={() => {
-            redirect("/gender");
-          }}
-        >
-          Continue
-        </Button>
-      </div>
-    </div>
-  );
+  const pages = (active: string) => {
+    switch (active) {
+      case "Intro":
+        return <Intro setActiveComponent={setActiveComponent} />;
+      case "Gender":
+        return (
+          <Gender
+            handleInput={handleInput}
+            setActiveComponent={setActiveComponent}
+          />
+        );
+      case "Info":
+        return <Info handleInput={handleInput} />;
+      default:
+        redirect("/error");
+        break;
+    }
+  };
+
+  return <>{pages(activeComponent)}</>;
 };
 
 export default Welcome;

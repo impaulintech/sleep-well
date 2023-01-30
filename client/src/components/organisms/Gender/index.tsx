@@ -1,25 +1,35 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { NextPage } from "next";
 
-import redirect from "~/shared/utils/redirect";
 import NextHead from "~/components/atoms/NextHead";
 import Button from "~/components/atoms/Button";
 import Radio from "~/components/organisms/Radio";
 
-const Gender: NextPage = (): JSX.Element => {
+const Gender = ({
+  setActiveComponent,
+  handleInput,
+}: {
+  setActiveComponent: (value: string) => void;
+  handleInput: (value: {}) => void;
+}) => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
+  const [gender, setGender] = useState<string>("");
 
   const options = [
-    { name: "Male" },
-    { name: "Female" },
-    { name: "Non-binary" },
-    { name: "Prefer not to say" },
+    { id: 1, choice: "Male" },
+    { id: 2, choice: "Female" },
+    { id: 3, choice: "Non-binary" },
+    { id: 4, choice: "Prefer not to say" },
   ];
 
   const handleOnchange = (e: any) => {
-    console.log(e);
+    setGender(e.choice);
     setButtonDisabled(false);
+  };
+
+  const handleNext = () => {
+    handleInput({ gender: gender });
+    setActiveComponent("Info");
   };
 
   return (
@@ -35,15 +45,14 @@ const Gender: NextPage = (): JSX.Element => {
           ></Image>
           <p className=" text-3xl font-semibold">What is your gender?</p>
         </section>
-        <Radio callback={handleOnchange} options={options} />
+        <Radio
+          callback={handleOnchange}
+          options={options}
+          keyValue={"choice"}
+        />
       </div>
       <div className="flex flex-col space-y-5 pb-16">
-        <Button
-          isDisabled={buttonDisabled}
-          handleClick={() => {
-            redirect("/info");
-          }}
-        >
+        <Button isDisabled={buttonDisabled} handleClick={handleNext}>
           Continue
         </Button>
       </div>

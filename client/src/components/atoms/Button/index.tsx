@@ -2,7 +2,7 @@ import React from "react";
 
 interface IButton {
   children: any;
-  handleClick: () => void;
+  handleClick: (e: any) => void;
   className?: string;
   isDisabled?: boolean;
 }
