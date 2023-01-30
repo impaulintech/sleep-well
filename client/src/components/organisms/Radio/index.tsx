@@ -2,11 +2,12 @@ import { RadioGroup } from "@headlessui/react";
 import { useState } from "react";
 
 interface IRadio {
-  options: { name: string }[];
+  options: any;
   callback: any;
+  keyValue: any;
 }
 
-export default function Radio({ options, callback }: IRadio) {
+export default function Radio({ options, callback, keyValue }: IRadio) {
   const [selected, setSelected] = useState<string | null>(null);
 
   const handleCallback = (event: any) => {
@@ -19,9 +20,9 @@ export default function Radio({ options, callback }: IRadio) {
       <RadioGroup value={selected} onChange={handleCallback}>
         <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
         <div className="space-y-2">
-          {options.map((option) => (
+          {options.map((option: any) => (
             <RadioGroup.Option
-              key={option.name}
+              key={option.id}
               value={option}
               className={({ active }) =>
                 ` 
@@ -39,7 +40,7 @@ export default function Radio({ options, callback }: IRadio) {
                     as="p"
                     className={`${active && "text-swell-60"}`}
                   >
-                    {option.name}
+                    {option[keyValue]}
                   </RadioGroup.Label>
                 </div>
               )}
