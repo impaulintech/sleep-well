@@ -5,7 +5,7 @@ interface IInput {
   name: string;
   label: string;
   type?: string;
-  placeholder: string;
+  placeholder?: string;
 }
 
 const Input = ({ value, name, label, type = "text", placeholder }: IInput) => {
