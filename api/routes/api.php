@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/', function () {
+    return response()->json([
+        "message" => "You are at the version 1 of this api",
+        "more" => "api documentation"
+    ]);
 });
+
+require __DIR__ . '/user/auth.php';
+require __DIR__ . '/user/user.php';
