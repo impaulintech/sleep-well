@@ -5,11 +5,19 @@ import NextHead from "~/components/atoms/NextHead";
 import Button from "~/components/atoms/Button";
 import redirect from "~/shared/utils/redirect";
 
-const Questionnaire = ({ totalPage, children, buttonState, page }: any) => {
+const Questionnaire = ({
+  totalPage,
+  children,
+  buttonState,
+  page,
+  callback,
+}: any) => {
   const [buttonDisabled, setButtonDisabled] = buttonState;
   const [currentPage, setCurrentPage] = page;
 
-  const handleClick = () => {
+  const handleClick = (event: any) => {
+    callback(event);
+
     if (currentPage == totalPage - 1) {
       return redirect("/loader");
     } else {

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { NextPage } from "next";
 
 import NextHead from "~/components/atoms/NextHead";
 import Button from "~/components/atoms/Button";
@@ -11,13 +10,20 @@ interface IInfo {
   age?: number;
 }
 
-const Info: NextPage = (): JSX.Element => {
+const Info = ({ handleInput }: { handleInput: (value: {}) => void }) => {
   const initialInfo = {
     name: "",
     age: 0,
   };
 
   const [info, setInfo] = useState<IInfo>(initialInfo);
+
+  const handleNext = () => {
+    const { age, name } = info;
+
+    handleInput({ age: age, name: name });
+    redirect("/pre-questions");
+  };
 
   return (
     <div className="flex flex-col h-screen justify-between">
@@ -67,9 +73,7 @@ const Info: NextPage = (): JSX.Element => {
           isDisabled={
             info.name == initialInfo.name || info.age == initialInfo.age
           }
-          handleClick={() => {
-            redirect("/");
-          }}
+          handleClick={handleNext}
         >
           Continue
         </Button>

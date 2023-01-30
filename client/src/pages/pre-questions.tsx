@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { pre_questions } from "~/shared/json/pre_questions.json";
 import Questionnaire from "~/components/templates/Questionnaire";
@@ -12,17 +12,24 @@ const PreQuestions: NextPage = (): JSX.Element => {
 
   const [result, setResult] = useState<any[]>([]);
 
-  const handleOnchange = (event: any) => {
-    const newValue = [
-      {
-        pre_question: pre_questions[currentPage].id,
-        pre_choice: event.id,
-      },
-    ];
+  const [value, setValue] = useState({});
 
-    setResult([...result, ...newValue]);
+  const handleOnchange = (event: any) => {
+    const newValue = {
+      pre_question: pre_questions[currentPage].id,
+      pre_choice: event.id,
+    };
+
+    setValue({
+      ...value,
+      ...newValue,
+    });
 
     setButtonDisabled(false);
+  };
+
+  const handleNext = () => {
+    setResult([...result, value]);
   };
 
   return (
@@ -32,9 +39,10 @@ const PreQuestions: NextPage = (): JSX.Element => {
         questions={pre_questions}
         page={[currentPage, setCurrentPage]}
         buttonState={[buttonDisabled, setButtonDisabled]}
+        callback={handleNext}
       >
         <p className="text-xl font-semibold">
-          {pre_questions[currentPage]?.pre_question}
+          {currentPage + 1}.&#41; {pre_questions[currentPage]?.pre_question}
         </p>
         <Radio
           callback={handleOnchange}

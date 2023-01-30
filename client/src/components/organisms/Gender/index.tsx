@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { NextPage } from "next";
 
-import redirect from "~/shared/utils/redirect";
 import NextHead from "~/components/atoms/NextHead";
 import Button from "~/components/atoms/Button";
 import Radio from "~/components/organisms/Radio";
 
-const Gender: NextPage = (): JSX.Element => {
+const Gender = ({
+  setActiveComponent,
+  handleInput,
+}: {
+  setActiveComponent: (value: string) => void;
+  handleInput: (value: {}) => void;
+}) => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
+  const [gender, setGender] = useState<string>("");
 
   const options = [
     { id: 1, choice: "Male" },
@@ -18,7 +23,13 @@ const Gender: NextPage = (): JSX.Element => {
   ];
 
   const handleOnchange = (e: any) => {
+    setGender(e.choice);
     setButtonDisabled(false);
+  };
+
+  const handleNext = () => {
+    handleInput({ gender: gender });
+    setActiveComponent("Info");
   };
 
   return (
@@ -39,15 +50,9 @@ const Gender: NextPage = (): JSX.Element => {
           options={options}
           keyValue={"choice"}
         />
-        {/* options, callback, keyValue */}
       </div>
       <div className="flex flex-col space-y-5 pb-16">
-        <Button
-          isDisabled={buttonDisabled}
-          handleClick={() => {
-            redirect("/info");
-          }}
-        >
+        <Button isDisabled={buttonDisabled} handleClick={handleNext}>
           Continue
         </Button>
       </div>

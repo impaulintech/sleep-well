@@ -12,15 +12,19 @@ const Loader = () => {
 
   return (
     <>
-      <NextHead title="SleepWell | Loading" />
-      <div className="flex flex-col items-center space-y-5">
-        <Image src="/images/Time.png" alt="time" width="330" height="270" />
-        <div className="animate-spin ">
-          <LoadingIcon />
+      <div className="absolute top-0">
+        <NextHead key="404" title="SleepWell | Loading"></NextHead>
+      </div>
+      <div className="h-screen flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center space-y-5">
+          <Image src="/images/Time.png" alt="time" width="330" height="270" />
+          <div className="animate-spin ">
+            <LoadingIcon />
+          </div>
+          <p className="text-center text-3xl font-semibold">
+            Generating Personalized Questions
+          </p>
         </div>
-        <p className=" text-3xl font-semibold">
-          Generating Personalized Questions
-        </p>
       </div>
     </>
   );
