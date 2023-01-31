@@ -14,7 +14,7 @@ const Welcome: NextPage = (): JSX.Element => {
   const handleInput = (newValue: any) => {
     setResult({ ...result, ...newValue });
   };
-
+  
   const pages = (active: string) => {
     switch (active) {
       case "Intro":
