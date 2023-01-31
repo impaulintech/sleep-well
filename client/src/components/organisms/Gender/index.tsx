@@ -21,7 +21,7 @@ const Gender = ({ setActiveComponent, handleInput }: Props) => {
     { id: 4, choice: "Prefer not to say" },
   ];
 
-  const handleOnchange = (event: any) => {
+  const handleOnchange = (event: any) => { 
     setGender(event.choice);
     setButtonDisabled(false);
   };

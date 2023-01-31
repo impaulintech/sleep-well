@@ -1,5 +1,5 @@
 import { RadioGroup } from "@headlessui/react";
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 
 interface IRadio {
   options: any;
@@ -8,27 +8,22 @@ interface IRadio {
 }
 
 export default function Radio({ options, callback, keyValue }: IRadio) {
-  const [selected, setSelected] = useState<any>(null);
-
-  const handleCallback = (event: any) => {
-    setSelected(event);
-  };
+  const [selected, setSelected] = useState<any>(null); 
 
   return (
     <div className="w-full">
       <RadioGroup
         value={selected}
-        onChange={handleCallback}
-        onMouseDown={(event: any) => {
-          callback(event);
-        }}
-      >
-        <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+        onChange={setSelected} 
+      > 
         <div className="space-y-2">
           {options.map((option: any) => (
             <RadioGroup.Option
               key={option.id}
               value={option}
+              onMouseDown={()=>{
+                callback(option)
+              }}
               className={({ active, checked }) =>
                 ` 
                   ${
