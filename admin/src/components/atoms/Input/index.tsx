@@ -6,9 +6,10 @@ interface IInput {
   label: string;
   type?: string;
   placeholder?: string;
+  defaultValue?: string;
 }
 
-const Input = ({ value, name, label, type = "text", placeholder }: IInput) => {
+const Input = ({ value, name, label, type = "text", placeholder, defaultValue = "" }: IInput) => {
   return (
     <div className="flex flex-col space-y-1 pb-2">
       <label className="text-lg font-medium" htmlFor={name}>
@@ -20,6 +21,7 @@ const Input = ({ value, name, label, type = "text", placeholder }: IInput) => {
         type={type}
         id={name}
         placeholder={placeholder}
+        defaultValue={defaultValue}
       />
     </div>
   );

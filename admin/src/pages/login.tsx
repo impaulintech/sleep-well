@@ -22,7 +22,8 @@ const AdminLogin: NextPage = (): JSX.Element => {
             <Input
               name="email"
               label="Email address"
-              placeholder="johndoe@gmail.com"
+              placeholder="super@admin.com"
+              defaultValue="super@admin.com"
             ></Input>
             <Input
               name="password"
