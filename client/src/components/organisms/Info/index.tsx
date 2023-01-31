@@ -31,10 +31,12 @@ const Info = ({ handleInput }: { handleInput: (value: {}) => void }) => {
         <NextHead title="SleepWell | Welcome"></NextHead>
         <section className="flex flex-col items-center mb-7">
           <Image
+            priority
             src="/images/Welcome.png"
             alt="welcome"
-            width="205"
-            height="160"
+            width="400"
+            height="400"
+            className="w-[205px] h-[160px]"
           ></Image>
         </section>
         <div className="flex flex-col w-full space-y-4">

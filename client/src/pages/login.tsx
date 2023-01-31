@@ -13,7 +13,14 @@ const Login: NextPage = (): JSX.Element => {
       <div className="pb-10">
         <NextHead key="login" title="SleepWell | Login" />
         <div className="relative flex justify-center">
-          <Image src="/images/Login.png" alt="login" width="235" height="225" />
+          <Image
+            priority
+            src="/images/Login.png"
+            alt="login"
+            width="400"
+            height="400"
+            className="w-[235px] h-[225px]"
+          />
           <p className="absolute bottom-0 text-3xl font-semibold">
             Welcome Back!
           </p>

@@ -11,6 +11,9 @@ const Questionnaire = ({
   buttonState,
   page,
   callback,
+  image,
+  imageHeight = "216px",
+  imageWidth = "260px",
 }: any) => {
   const [buttonDisabled, setButtonDisabled] = buttonState;
   const [currentPage, setCurrentPage] = page;
@@ -38,10 +41,12 @@ const Questionnaire = ({
 
         <section className="flex flex-col items-center mb-7">
           <Image
-            src="/images/Time.png"
+            priority
+            src={image}
             alt="welcome"
-            width="205"
-            height="160"
+            width="400"
+            height="400"
+            className={`w-[${imageWidth}] h-[${imageHeight}]`}
           ></Image>
         </section>
         <div className="space-y-3">{children}</div>

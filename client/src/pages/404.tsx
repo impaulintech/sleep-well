@@ -32,7 +32,14 @@ const NotFound: NextPage = (): JSX.Element => {
       </div>
       <div className="flex flex-col h-screen justify-center space-y-10 items-center">
         <div className="flex flex-col justify-center items-center">
-          <Image src="/images/Error.png" alt="error" width="400" height="400" />
+          <Image
+            priority
+            src="/images/Error.png"
+            alt="error"
+            width="400"
+            height="400"
+            className="w-[300px] h-[240px]"
+          />
           <div className="flex flex-col space-y-2">
             <h1 className="text-center text-3xl font-semibold">
               Page not found!

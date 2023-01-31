@@ -1,6 +1,6 @@
 import Router from 'next/router'
 
-const redirect = (path: string) => {
+const redirect = (path: any) => {
   return Router.push(path)
 }
 

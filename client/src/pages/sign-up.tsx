@@ -14,10 +14,12 @@ const SignUp: NextPage = (): JSX.Element => {
         <NextHead key="signup" title="SleepWell | Sign Up" />
         <div className="relative flex justify-center">
           <Image
+            priority
             src="/images/Signup.png"
             alt="signup"
-            width="266"
-            height="230"
+            width="400"
+            height="400"
+            className="w-[225px] h-[230px]"
           />
           <p className="absolute bottom-0 text-3xl font-semibold">
             Create an account

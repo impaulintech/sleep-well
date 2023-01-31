@@ -1,9 +1,9 @@
 import { NextPage } from "next";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
+import Radio from "~/components/organisms/Radio";
 import { pre_questions } from "~/shared/json/pre_questions.json";
 import Questionnaire from "~/components/templates/Questionnaire";
-import Radio from "~/components/organisms/Radio";
 
 const PreQuestions: NextPage = (): JSX.Element => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
@@ -13,7 +13,7 @@ const PreQuestions: NextPage = (): JSX.Element => {
   const [result, setResult] = useState<any[]>([]);
 
   const [value, setValue] = useState({});
-
+  
   const handleOnchange = (event: any) => {
     const newValue = {
       pre_question: pre_questions[currentPage].id,
@@ -40,6 +40,7 @@ const PreQuestions: NextPage = (): JSX.Element => {
         page={[currentPage, setCurrentPage]}
         buttonState={[buttonDisabled, setButtonDisabled]}
         callback={handleNext}
+        image="/images/pre-question.png"
       >
         <p className="text-xl font-semibold">
           {currentPage + 1}.&#41; {pre_questions[currentPage]?.pre_question}
