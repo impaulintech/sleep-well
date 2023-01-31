@@ -5,25 +5,33 @@ import NextHead from "~/components/atoms/NextHead";
 import Button from "~/components/atoms/Button";
 import Loader from "../Loader";
 
-const Questionnaire = ({
+interface IRecommendation {
+  totalPage: number;
+  children?: React.ReactNode;
+  page?: any;
+  callback: (e: Event) => void;
+  finalButtonMessage?: string;
+  imageHeight?: number;
+  imageWidth?: number;
+  loaderUrl?: string;
+  loaderMessage?: string;
+}
+
+const Recommendation = ({
   totalPage,
   children,
-  buttonState,
   page,
   callback,
-  image,
   finalButtonMessage,
-  imageHeight = "216",
-  imageWidth = "260",
+  imageHeight = 216,
+  imageWidth = 260,
   loaderUrl,
   loaderMessage,
-}: any) => {
-  const [buttonDisabled, setButtonDisabled] = buttonState;
+}: IRecommendation) => {
   const [currentPage, setCurrentPage] = page;
 
   const handleClick = (event: any) => {
     callback(event);
-    setButtonDisabled(true);
     setCurrentPage(currentPage + 1);
   };
 
@@ -35,17 +43,16 @@ const Questionnaire = ({
         <div className="flex flex-col h-screen justify-between">
           <div>
             <div className="flex justify-between">
-              <NextHead title="SleepWell | Welcome"></NextHead>
+              <NextHead title="SleepWell | Recommendation"></NextHead>
               <div className="text-xl font-medium mt-5">
                 {currentPage + 1}/{totalPage}
               </div>
             </div>
-
             <section className="flex flex-col items-center mb-7">
               <Image
                 priority
-                src={image}
-                alt="welcome"
+                src="/images/recommendation.png"
+                alt="recommendation"
                 width={imageWidth}
                 height={imageHeight}
                 className={`w-[${imageWidth}] h-[${imageHeight}]`}
@@ -54,7 +61,7 @@ const Questionnaire = ({
             <div className="space-y-3">{children}</div>
           </div>
           <div className="flex flex-col space-y-5 pt-5 pb-16">
-            <Button isDisabled={buttonDisabled} handleClick={handleClick}>
+            <Button handleClick={handleClick}>
               {currentPage == totalPage - 1 && finalButtonMessage
                 ? finalButtonMessage
                 : "Continue"}
@@ -66,4 +73,4 @@ const Questionnaire = ({
   );
 };
 
-export default Questionnaire;
+export default Recommendation;

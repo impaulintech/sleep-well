@@ -41,6 +41,8 @@ const PreQuestions: NextPage = (): JSX.Element => {
         buttonState={[buttonDisabled, setButtonDisabled]}
         callback={handleNext}
         image={"/images/main-question.png"}
+        imageHeight="216"
+        imageWidth="260"
         loaderUrl={"/"}
         loaderMessage={"Generating Recommendations"}
         hasGetResult={true}

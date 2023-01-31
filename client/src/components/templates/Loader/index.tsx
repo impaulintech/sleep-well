@@ -5,7 +5,7 @@ import React from "react";
 import redirect from "~/shared/utils/redirect";
 import LoadingIcon from "~/shared/icons/Loading";
 
-const Loader = ({ message, url }: { url: string; message: string }) => {
+const Loader = ({ message, url }: { url?: string; message?: string }) => {
   setTimeout(() => {
     redirect(url);
   }, 3000);
