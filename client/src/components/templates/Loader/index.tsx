@@ -5,9 +5,9 @@ import React from "react";
 import redirect from "~/shared/utils/redirect";
 import LoadingIcon from "~/shared/icons/Loading";
 
-const Loader = () => {
+const Loader = ({ message, url }: { url: string; message: string }) => {
   setTimeout(() => {
-    redirect("/");
+    redirect(url);
   }, 3000);
 
   return (
@@ -21,9 +21,7 @@ const Loader = () => {
           <div className="animate-spin ">
             <LoadingIcon />
           </div>
-          <p className="text-center text-3xl font-semibold">
-            Generating Personalized Questions
-          </p>
+          <p className="text-center text-3xl font-semibold">{message}</p>
         </div>
       </div>
     </>
