@@ -1,14 +1,14 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
 
-import Radio from "~/components/organisms/Radio";
-import { pre_questions } from "~/shared/json/pre_questions.json";
+import { main_questions } from "~/shared/json/main_questions.json";
 import Questionnaire from "~/components/templates/Questionnaire";
+import Radio from "~/components/organisms/Radio";
 
 const PreQuestions: NextPage = (): JSX.Element => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(0);
-  const totalPage = pre_questions.length;
+  const totalPage = main_questions.length;
 
   const [result, setResult] = useState<any[]>([]);
 
@@ -16,7 +16,7 @@ const PreQuestions: NextPage = (): JSX.Element => {
 
   const handleOnchange = (event: any) => {
     const newValue = {
-      pre_question: pre_questions[currentPage].id,
+      pre_question: main_questions[currentPage].id,
       pre_choice: event.id,
     };
 
@@ -36,21 +36,23 @@ const PreQuestions: NextPage = (): JSX.Element => {
     <>
       <Questionnaire
         totalPage={totalPage}
-        questions={pre_questions}
+        questions={main_questions}
         page={[currentPage, setCurrentPage]}
         buttonState={[buttonDisabled, setButtonDisabled]}
         callback={handleNext}
-        image="/images/pre-question.png"
-        loaderUrl={"/main-questions"}
-        loaderMessage="Generating Personalized Questions"
+        image={"/images/main-question.png"}
+        loaderUrl={"/"}
+        loaderMessage={"Generating Recommendations"}
+        hasGetResult={true}
+        finalButtonMessage="Get Result"
       >
         <p className="text-xl font-semibold">
-          {currentPage + 1}.&#41; {pre_questions[currentPage]?.pre_question}
+          {currentPage + 1}.&#41; {main_questions[currentPage]?.main_question}
         </p>
         <Radio
           callback={handleOnchange}
-          options={pre_questions[currentPage]?.pre_choices}
-          keyValue="pre_choice"
+          options={main_questions[currentPage]?.main_choices}
+          keyValue="main_choice"
         />
       </Questionnaire>
     </>
