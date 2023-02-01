@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
 
-import { main_questions } from "~/shared/json/main_questions.json";
-import Questionnaire from "~/components/templates/Questionnaire";
 import Radio from "~/components/organisms/Radio";
+import Questionnaire from "~/components/templates/Questionnaire";
+import { main_questions } from "~/shared/json/main_questions.json";
 
 const PreQuestions: NextPage = (): JSX.Element => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
@@ -61,4 +61,5 @@ const PreQuestions: NextPage = (): JSX.Element => {
   );
 };
 
+export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
 export default PreQuestions;

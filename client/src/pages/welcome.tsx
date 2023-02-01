@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 
 import redirect from "~/shared/utils/redirect";
-import Intro from "~/components/organisms/Intro";
 import Info from "~/components/organisms/Info";
+import Intro from "~/components/organisms/Intro";
 import Gender from "~/components/organisms/Gender";
 
 const Welcome: NextPage = (): JSX.Element => {
@@ -14,7 +14,7 @@ const Welcome: NextPage = (): JSX.Element => {
   const handleInput = (newValue: any) => {
     setResult({ ...result, ...newValue });
   };
-  
+
   const pages = (active: string) => {
     switch (active) {
       case "Intro":
@@ -27,7 +27,7 @@ const Welcome: NextPage = (): JSX.Element => {
           />
         );
       case "Info":
-        return <Info handleInput={handleInput} />;
+        return <Info result={result} />;
       default:
         redirect("/error");
         break;
@@ -37,4 +37,5 @@ const Welcome: NextPage = (): JSX.Element => {
   return <>{pages(activeComponent)}</>;
 };
 
+export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
 export default Welcome;

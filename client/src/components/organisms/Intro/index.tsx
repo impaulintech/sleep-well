@@ -55,7 +55,7 @@ const Intro = ({
         ></Checkbox>
         <Button
           isDisabled={!isChecked}
-          handleClick={() => setActiveComponent("Gender")}
+          onClick={() => setActiveComponent("Gender")}
         >
           Continue
         </Button>

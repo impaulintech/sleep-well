@@ -57,4 +57,5 @@ const PreQuestions: NextPage = (): JSX.Element => {
   );
 };
 
+export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
 export default PreQuestions;

@@ -5,12 +5,12 @@ import NextHead from "~/components/atoms/NextHead";
 import Button from "~/components/atoms/Button";
 import Radio from "~/components/organisms/Radio";
 
-type Props = {
+interface IGender {
   setActiveComponent: (value: string) => void;
   handleInput: (value: {}) => void;
-};
+}
 
-const Gender = ({ setActiveComponent, handleInput }: Props) => {
+const Gender = ({ setActiveComponent, handleInput }: IGender) => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const [gender, setGender] = useState<any>(null);
 
@@ -21,7 +21,7 @@ const Gender = ({ setActiveComponent, handleInput }: Props) => {
     { id: 4, choice: "Prefer not to say" },
   ];
 
-  const handleOnchange = (event: any) => { 
+  const handleOnchange = (event: any) => {
     setGender(event.choice);
     setButtonDisabled(false);
   };
@@ -53,7 +53,7 @@ const Gender = ({ setActiveComponent, handleInput }: Props) => {
         />
       </div>
       <div className="flex flex-col space-y-5 pb-16">
-        <Button isDisabled={buttonDisabled} handleClick={handleNext}>
+        <Button isDisabled={buttonDisabled} onClick={handleNext}>
           Continue
         </Button>
       </div>

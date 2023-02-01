@@ -2,18 +2,19 @@ import React from "react";
 
 interface IButton {
   children: any;
-  handleClick: (e: any) => void;
+  onClick: any;
   className?: string;
   isDisabled?: boolean;
 }
 
 const Button = (props: IButton) => {
-  const { handleClick, className, children, isDisabled } = props;
+  const { onClick, className, children, isDisabled } = props;
 
   return (
     <>
       <button
-        onClick={handleClick}
+        type="submit"
+        onClick={onClick}
         className={`flex w-full p-2 rounded bg-swell-30 text-white justify-center border border-dark ${className} ${
           isDisabled && "opacity-60"
         }`}
