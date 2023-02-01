@@ -54,7 +54,7 @@ const Questionnaire = ({
             <div className="space-y-3">{children}</div>
           </div>
           <div className="flex flex-col space-y-5 pt-5 pb-16">
-            <Button isDisabled={buttonDisabled} handleClick={handleClick}>
+            <Button isDisabled={buttonDisabled} onClick={handleClick}>
               {currentPage == totalPage - 1 && finalButtonMessage
                 ? finalButtonMessage
                 : "Continue"}

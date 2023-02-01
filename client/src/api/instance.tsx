@@ -3,7 +3,7 @@ import { getCookie } from "cookies-next";
 
 const token = getCookie("token");
 
-export const axios = Axios.create({
+export const instance = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   headers: {
     Accept: "application/json",
@@ -13,5 +13,5 @@ export const axios = Axios.create({
 });
 
 export const setBearerToken = (token: string) => {
-  axios.defaults.headers.Authorization = `Bearer ${token}`;
+  instance.defaults.headers.Authorization = `Bearer ${token}`;
 };

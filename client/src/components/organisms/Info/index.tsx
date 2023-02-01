@@ -3,29 +3,37 @@ import Image from "next/image";
 
 import NextHead from "~/components/atoms/NextHead";
 import Button from "~/components/atoms/Button";
-import redirect from "~/shared/utils/redirect";
+import Loader from "~/components/templates/Loader";
 
 interface IInfo {
-  name?: string;
+  fullname?: string;
   age?: number;
 }
 
-const Info = ({ handleInput }: { handleInput: (value: {}) => void }) => {
+interface IInfoPage {
+  result: any;
+}
+
+const Info = ({ result }: IInfoPage) => {
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
+
   const initialInfo = {
-    name: "",
+    fullname: "",
     age: 0,
   };
 
   const [info, setInfo] = useState<IInfo>(initialInfo);
 
   const handleNext = () => {
-    const { age, name } = info;
-
-    handleInput({ age: age, name: name });
-    redirect("/pre-questions");
+    // pass to BE and redirect to fake-loader
+    console.log({ ...result, ...info });
+    setIsSubmit(true);
+    return;
   };
 
-  return (
+  return isSubmit ? (
+    <Loader message="Updating your information..." url="/" />
+  ) : (
     <div className="flex flex-col h-screen justify-between">
       <div className="pb-10">
         <NextHead title="SleepWell | Welcome"></NextHead>
@@ -46,7 +54,7 @@ const Info = ({ handleInput }: { handleInput: (value: {}) => void }) => {
             </label>
             <input
               onChange={(e) => {
-                setInfo({ ...info, name: e.target.value });
+                setInfo({ ...info, fullname: e.target.value });
               }}
               type="text"
               className="flex w-full text-center font-medium rounded border-swell-30 border-2 text-lg bg-white px-4 py-3"
@@ -73,9 +81,9 @@ const Info = ({ handleInput }: { handleInput: (value: {}) => void }) => {
       <div className="flex flex-col space-y-5 pb-16">
         <Button
           isDisabled={
-            info.name == initialInfo.name || info.age == initialInfo.age
+            info.fullname == initialInfo.fullname || info.age == initialInfo.age
           }
-          handleClick={handleNext}
+          onClick={handleNext}
         >
           Continue
         </Button>

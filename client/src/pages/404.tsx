@@ -1,7 +1,7 @@
+import Image from "next/image";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 
-import Image from "next/image";
 import redirect from "~/shared/utils/redirect";
 import Button from "~/components/atoms/Button";
 import NextHead from "~/components/atoms/NextHead";
@@ -50,7 +50,7 @@ const NotFound: NextPage = (): JSX.Element => {
             </p>
           </div>
         </div>
-        <Button handleClick={handleClick} className="max-w-[341px]">
+        <Button onClick={handleClick} className="max-w-[341px]">
           Go Home
         </Button>
       </div>

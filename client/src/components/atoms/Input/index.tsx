@@ -6,15 +6,25 @@ interface IInput {
   label: string;
   type?: string;
   placeholder: string;
+  onChange: (value: any) => void;
 }
 
-const Input = ({ value, name, label, type = "text", placeholder }: IInput) => {
+const Input = ({
+  value,
+  name,
+  label,
+  type = "text",
+  placeholder,
+  onChange,
+}: IInput) => {
   return (
     <div className="flex flex-col space-y-1 pb-2">
       <label className="text-lg font-medium" htmlFor={name}>
         {label}
       </label>
       <input
+        onChange={onChange}
+        name={name}
         value={value}
         className="flex items-center justify-start font-medium rounded border-swell-30 border-2 text-base bg-white px-4 py-2"
         type={type}
