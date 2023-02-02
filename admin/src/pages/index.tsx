@@ -1,16 +1,15 @@
-import { getCookie } from "cookies-next";
 import { toast } from "react-hot-toast";
 
 import AuthApi from "~/api/admin/AuthApi";
 import redirect from "~/shared/utils/redirect";
 import Button from "~/components/atoms/Button";
+import { removeCookies } from "cookies-next";
 
 export default function Home() {
-  const token = getCookie("token");
-
   const handleLogout = () => {
     toast.promise(
       AuthApi.logout().then(() => {
+        removeCookies("token");
         redirect("/login");
       }),
       {
@@ -36,3 +35,5 @@ export default function Home() {
     </>
   );
 }
+
+export { AdminSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";

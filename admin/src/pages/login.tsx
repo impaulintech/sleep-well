@@ -1,13 +1,13 @@
-import { NextPage } from "next";
 import Head from "next/head";
-import React, { useState } from "react";
+import { NextPage } from "next";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { setCookie } from "cookies-next";
 
+import AuthApi from "~/api/admin/AuthApi";
 import Input from "~/components/atoms/Input";
 import Button from "~/components/atoms/Button";
 import LogoIcon from "~/shared/icons/LogoIcon";
-import { toast } from "react-hot-toast";
-import AuthApi from "~/api/admin/AuthApi";
-import { setCookie } from "cookies-next";
 import redirect from "~/shared/utils/redirect";
 
 const AdminLogin: NextPage = (): JSX.Element => {
@@ -26,19 +26,20 @@ const AdminLogin: NextPage = (): JSX.Element => {
     toast.promise(
       AuthApi.login(params).then((res) => {
         const token = res.data.token;
-        const user = res.data.user;
-
+        redirect("/dashboard");
         setCookie("token", token);
-        user.fullname && redirect("/");
       }),
       {
         loading: "Loading",
-        success: (data) => "Successfully logged in",
+        success: (data) => `Logged in successfully!`,
         error: (err) => `${err.response.data.message}`,
       }
     );
   };
 
+  useEffect(() => {
+    console.log(params);
+  }, [params]);
   return (
     <div className="flex w-full justify-center">
       <Head>
@@ -75,4 +76,5 @@ const AdminLogin: NextPage = (): JSX.Element => {
   );
 };
 
+export { AdminSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
 export default AdminLogin;
