@@ -1,12 +1,45 @@
-import { NextPage } from "next";
 import Head from "next/head";
-import React from "react";
+import { NextPage } from "next";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { setCookie } from "cookies-next";
 
+import AuthApi from "~/api/admin/AuthApi";
 import Input from "~/components/atoms/Input";
 import Button from "~/components/atoms/Button";
 import LogoIcon from "~/shared/icons/LogoIcon";
+import redirect from "~/shared/utils/redirect";
 
 const AdminLogin: NextPage = (): JSX.Element => {
+  const initialParams = {
+    email: "super@admin.com",
+    password: "",
+  };
+
+  const [params, setParams] = useState(initialParams);
+
+  const handleChange = (e: any) => {
+    setParams({ ...params, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    toast.promise(
+      AuthApi.login(params).then((res) => {
+        const token = res.data.token;
+        redirect("/dashboard");
+        setCookie("token", token);
+      }),
+      {
+        loading: "Loading",
+        success: (data) => `Logged in successfully!`,
+        error: (err) => `${err.response.data.message}`,
+      }
+    );
+  };
+
+  useEffect(() => {
+    console.log(params);
+  }, [params]);
   return (
     <div className="flex w-full justify-center">
       <Head>
@@ -20,12 +53,14 @@ const AdminLogin: NextPage = (): JSX.Element => {
           </div>
           <div>
             <Input
+              onChange={handleChange}
               name="email"
               label="Email address"
               placeholder="super@admin.com"
               defaultValue="super@admin.com"
             ></Input>
             <Input
+              onChange={handleChange}
               name="password"
               label="Password"
               type="password"
@@ -33,7 +68,7 @@ const AdminLogin: NextPage = (): JSX.Element => {
             ></Input>
           </div>
           <div className="pb-16">
-            <Button handleClick={() => {}}>Login</Button>
+            <Button onClick={handleSubmit}>Login</Button>
           </div>
         </div>
       </div>
@@ -41,4 +76,5 @@ const AdminLogin: NextPage = (): JSX.Element => {
   );
 };
 
+export { AdminSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
 export default AdminLogin;

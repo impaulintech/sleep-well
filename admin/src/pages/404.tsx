@@ -52,7 +52,7 @@ const NotFound: NextPage = (): JSX.Element => {
             </div>
           </div>
           <div>
-            <Button handleClick={handleClick}>Go back</Button>
+            <Button onClick={handleClick}>Go back</Button>
           </div>
         </div>
       </div>
