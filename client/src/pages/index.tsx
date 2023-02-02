@@ -1,9 +1,9 @@
-import { getCookie } from "cookies-next";
 import { toast } from "react-hot-toast";
+import { getCookie, removeCookies } from "cookies-next";
 
 import AuthApi from "~/api/user/AuthApi";
-import redirect from "~/shared/utils/redirect";
 import Button from "~/components/atoms/Button";
+import redirect from "~/shared/utils/redirect";
 
 export default function Home() {
   const token = getCookie("token");
@@ -11,6 +11,7 @@ export default function Home() {
   const handleLogout = () => {
     toast.promise(
       AuthApi.logout().then(() => {
+        removeCookies("token");
         redirect("/login");
       }),
       {
