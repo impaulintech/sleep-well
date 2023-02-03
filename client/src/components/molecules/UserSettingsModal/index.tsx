@@ -4,9 +4,12 @@ import CancelIcon from "~/shared/icons/CancelIcon";
 import Profile from "~/components/organisms/Profile";
 import Security from "~/components/organisms/Security";
 
-const UserSettingModal = () => {
-  const [showModal, setShowModal] = useState<boolean>(true);
+interface IUserSettingModal {
+  showModal: boolean;
+  setShowModal: any;
+}
 
+const UserSettingModal = ({ showModal, setShowModal }: IUserSettingModal) => {
   const [active, setActive] = useState<string>("Profile");
 
   const toggleActive = (value: string) => {
@@ -21,7 +24,7 @@ const UserSettingModal = () => {
     <>
       {showModal && (
         <div className="flex absolute inset-0 h-screen w-screen justify-center items-center bg-swell-30 bg-opacity-60">
-          <div className="flex flex-col justify-center w-80 bg-white rounded shadow-xl">
+          <div className="flex flex-col justify-center w-80 bg-white rounded shadow-xl z-50">
             {/* Heading */}
             <div className="flex justify-between pl-7 pr-4 py-2 border-b border-swell-30 text-base font-semibold">
               <div className="flex space-x-7">

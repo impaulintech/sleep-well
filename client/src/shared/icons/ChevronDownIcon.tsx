@@ -3,7 +3,7 @@ import React from "react";
 interface ICancelIcon {
   className?: string;
 }
-const ChevronDown = ({ className }: ICancelIcon) => {
+const ChevronDownIcon = ({ className }: ICancelIcon) => {
   return (
     <svg
       width="16"
@@ -24,4 +24,4 @@ const ChevronDown = ({ className }: ICancelIcon) => {
   );
 };
 
-export default ChevronDown;
+export default ChevronDownIcon;

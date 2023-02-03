@@ -14,11 +14,15 @@ const NextHead: FC<Props> = (props): JSX.Element => {
 
   return (
     <>
-      {hasIcon && <LogoIcon className="mt-5" />}
       <Head>
         <title>{`${title}`}</title>
-        {children}
       </Head>
+      {hasIcon && (
+        <div className="flex w-full justify-between mt-5">
+          <LogoIcon />
+          {children}
+        </div>
+      )}
     </>
   );
 };

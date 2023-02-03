@@ -4,7 +4,7 @@ import { useState } from "react";
 import Input from "~/components/atoms/Input";
 import Button from "~/components/atoms/Button";
 import Dropdown from "~/components/atoms/Dropdown";
-import RefreshIcon from "~/shared/icons/RefreshIcons";
+import RefreshIcon from "~/shared/icons/RefreshIcon";
 
 const Profile = () => {
   const initialParams = {
