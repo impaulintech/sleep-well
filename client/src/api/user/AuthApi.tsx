@@ -1,12 +1,12 @@
 import { instance } from "../instance";
 
 export interface IUserParams {
-  email: string;
-  password: string;
-  password_confirmation: string;
+  email?: string;
+  password?: string;
+  password_confirmation?: string;
   fullname?: string;
   gender?: string;
-  age?: string;
+  age?: number;
 }
 
 export interface ILoginParams {
