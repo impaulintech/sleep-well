@@ -17,7 +17,7 @@ class MainQuestionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "main_question" => fake()->sentence(rand(6, 9)) . '?'
         ];
     }
 }

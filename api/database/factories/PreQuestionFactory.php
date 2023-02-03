@@ -17,7 +17,7 @@ class PreQuestionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "pre_question" => fake()->sentence(rand(5, 10)) . '?'
         ];
     }
 }

@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('main_questions', function (Blueprint $table) {
             $table->id();
-            $table->string('main_question');
             $table->foreignId('pre_choice_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            $table->string('main_question');
             $table->timestamps();
         });
     }

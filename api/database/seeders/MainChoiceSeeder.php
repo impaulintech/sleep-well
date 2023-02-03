@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\MainChoice;
+use App\Models\MainQuestion;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class MainChoiceSeeder extends Seeder
 {
@@ -14,6 +16,10 @@ class MainChoiceSeeder extends Seeder
      */
     public function run()
     {
-        //
+        foreach (MainQuestion::all() as $mainQuestion) {
+            MainChoice::factory(3)->create([
+                'main_question_id' => $mainQuestion->id
+            ]);
+        }
     }
 }

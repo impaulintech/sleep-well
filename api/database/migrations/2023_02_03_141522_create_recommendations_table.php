@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id();
-            $table->string('recommendation');
             $table->foreignId('main_choice_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            $table->string('recommendation');
             $table->integer('like_counts');
             $table->integer('dislike_counts');
             $table->timestamps();
