@@ -17,7 +17,7 @@ class MainChoiceFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "main_choice" => fake()->word(1, 3)
         ];
     }
 }

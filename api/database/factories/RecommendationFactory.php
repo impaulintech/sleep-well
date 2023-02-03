@@ -17,7 +17,9 @@ class RecommendationFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "recommendation" => fake()->paragraph(1, 3),
+            "like_counts" => fake()->randomNumber(2),
+            "dislike_counts" => fake()->randomNumber(2)
         ];
     }
 }

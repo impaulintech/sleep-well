@@ -16,8 +16,11 @@ class GivenRecommendationFactory extends Factory
      */
     public function definition()
     {
+        $is_liked = fake()->boolean();
         return [
-            //
+            "is_completed" => fake()->boolean(),
+            "like" => $is_liked,
+            "dislike" => !$is_liked
         ];
     }
 }

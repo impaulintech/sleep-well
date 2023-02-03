@@ -17,7 +17,7 @@ class PreChoiceFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "pre_choice" => fake()->word(rand(1, 2))
         ];
     }
 }
