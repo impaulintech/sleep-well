@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MainQuestion;
 use App\Http\Requests\StoreMainQuestionRequest;
 use App\Http\Requests\UpdateMainQuestionRequest;
+use App\Http\Resources\MainQuestionResource;
 
 class MainQuestionController extends Controller
 {
@@ -15,7 +16,7 @@ class MainQuestionController extends Controller
      */
     public function index()
     {
-        //
+        return MainQuestionResource::collection(MainQuestion::get());
     }
 
     /**

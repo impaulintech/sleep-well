@@ -22,3 +22,6 @@ Route::get('/', function () {
 
 require __DIR__ . '/user/auth.php';
 require __DIR__ . '/user/user.php';
+
+require __DIR__ . '/assessment/index.php';
+

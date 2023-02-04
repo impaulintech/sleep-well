@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MainChoice;
 use App\Http\Requests\StoreMainChoiceRequest;
 use App\Http\Requests\UpdateMainChoiceRequest;
+use App\Http\Resources\MainChoiceResource;
 
 class MainChoiceController extends Controller
 {
@@ -15,7 +16,7 @@ class MainChoiceController extends Controller
      */
     public function index()
     {
-        //
+        return MainChoiceResource::collection(MainChoice::get());
     }
 
     /**

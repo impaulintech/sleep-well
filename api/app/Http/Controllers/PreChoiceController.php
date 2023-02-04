@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PreChoice;
 use App\Http\Requests\StorePreChoiceRequest;
 use App\Http\Requests\UpdatePreChoiceRequest;
+use App\Http\Resources\PreChoiceResource;
 
 class PreChoiceController extends Controller
 {
@@ -15,7 +16,7 @@ class PreChoiceController extends Controller
      */
     public function index()
     {
-        //
+        return PreChoiceResource::collection(PreChoice::get());
     }
 
     /**
