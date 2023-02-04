@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             MainQuestionSeeder::class,
             MainChoiceSeeder::class,
             RecommendationSeeder::class,
-            // GivenRecommendationSeeder::class,
+            GivenRecommendationSeeder::class,
         ]);
     }
 }
