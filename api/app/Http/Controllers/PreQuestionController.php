@@ -64,4 +64,13 @@ class PreQuestionController extends Controller
         $preQuestion->delete();
         return response()->json(['message' => 'Successfully deleted Pre Question.']);
     }
+
+    public function assessment()
+    {
+        $pre_questions = PreQuestion::with('preChoices')->get();
+
+        return response()->json([
+            'pre_questions' => $pre_questions,
+        ]);
+    }
 }

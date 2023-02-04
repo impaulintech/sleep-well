@@ -17,7 +17,7 @@ class PreChoice extends Model
         return $this->hasMany(MainQuestion::class);
     }
 
-    public function preQuestions()
+    public function preQuestion()
     {
         return $this->belongsTo(PreQuestion::class);
     }
