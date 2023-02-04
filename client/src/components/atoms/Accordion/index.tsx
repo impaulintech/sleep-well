@@ -3,7 +3,7 @@ import { Disclosure } from "@headlessui/react";
 
 import ThumbUpIcon from "~/shared/icons/ThumbUpIcon";
 import ThumbDownIcon from "~/shared/icons/ThumbDownIcon";
-import EllipseYellowIcon from "~/shared/icons/EllipseYellowIcon";
+import EllipseIcon from "~/shared/icons/EllipseIcon";
 
 interface IAccordion {
   title: string;
@@ -16,10 +16,10 @@ const Accordion = ({ title, children }: IAccordion) => {
       <Disclosure>
         {({ open }) => (
           <>
-            <div className="flex w-full justify-between items-center space-x-4 p-4 bg-swell-dark text-white">
+            <div className="flex w-full justify-between items-center space-x-4 p-4 bg-swell-dark text-white shadow-md">
               <Disclosure.Button className="flex w-full">
                 <div className="flex items-center space-x-3">
-                  <EllipseYellowIcon />
+                  <EllipseIcon statusColor="inProgress" />
                   <div className="text-xl font-bold">{title}</div>
                 </div>
               </Disclosure.Button>
@@ -40,7 +40,7 @@ const Accordion = ({ title, children }: IAccordion) => {
                 </div>
               </div>
             </div>
-            <Disclosure.Panel className="bg-gray text-base p-5">
+            <Disclosure.Panel className="bg-gray text-base p-5 border-b shadow-lg">
               {children}
             </Disclosure.Panel>
           </>
