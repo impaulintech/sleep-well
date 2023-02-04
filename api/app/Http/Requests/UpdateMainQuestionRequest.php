@@ -24,7 +24,7 @@ class UpdateMainQuestionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'main_question' => 'required|string',
         ];
     }
 }

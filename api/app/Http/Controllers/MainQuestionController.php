@@ -20,16 +20,6 @@ class MainQuestionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreMainQuestionRequest  $request
@@ -37,7 +27,15 @@ class MainQuestionController extends Controller
      */
     public function store(StoreMainQuestionRequest $request)
     {
-        //
+        $main_question = MainQuestion::create([
+            "pre_choice_id" => $request->pre_choice_id,
+            "main_question" => $request->main_question
+        ]);
+
+        return response()->json([
+            'message' => 'Successfully created new Main Question.',
+            'data' => $main_question->only('main_question', 'id')
+        ]);
     }
 
     /**
@@ -46,20 +44,9 @@ class MainQuestionController extends Controller
      * @param  \App\Models\MainQuestion  $mainQuestion
      * @return \Illuminate\Http\Response
      */
-    public function show(MainQuestion $mainQuestion)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\MainQuestion  $mainQuestion
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(MainQuestion $mainQuestion)
-    {
-        //
+        return new MainQuestionResource(MainQuestion::findOrFail($id));
     }
 
     /**
@@ -69,9 +56,19 @@ class MainQuestionController extends Controller
      * @param  \App\Models\MainQuestion  $mainQuestion
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateMainQuestionRequest $request, MainQuestion $mainQuestion)
+    public function update(UpdateMainQuestionRequest $request, $id)
     {
-        //
+        $main_question = MainQuestion::find($id);
+
+        if (!$main_question) {
+            return response()->json(['message' => 'Main Question not found.']);
+        }
+
+        $main_question->update($request->only('main_question'));
+        return response()->json([
+            'message' => 'Successfully updated Main question.',
+            'data' => $main_question->only('main_question', 'id')
+        ]);
     }
 
     /**
@@ -80,8 +77,15 @@ class MainQuestionController extends Controller
      * @param  \App\Models\MainQuestion  $mainQuestion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MainQuestion $mainQuestion)
+    public function destroy($id)
     {
-        //
+        $mainQuestion = MainQuestion::find($id);
+
+        if (!$mainQuestion) {
+            return response()->json(['message' => 'Main Question not found.']);
+        }
+
+        $mainQuestion->delete();
+        return response()->json(['message' => 'Successfully deleted Main Question.']);
     }
 }

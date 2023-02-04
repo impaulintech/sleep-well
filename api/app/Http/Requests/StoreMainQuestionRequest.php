@@ -24,7 +24,8 @@ class StoreMainQuestionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'main_question' => 'required|string',
+            'pre_choice_id' => 'required|numeric'
         ];
     }
 }
