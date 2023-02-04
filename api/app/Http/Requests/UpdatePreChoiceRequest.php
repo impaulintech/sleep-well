@@ -24,7 +24,7 @@ class UpdatePreChoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'pre_choice' => 'required|string',
         ];
     }
 }

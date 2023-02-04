@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePreQuestionRequest;
-use App\Http\Resources\PreQuestionResource;
 use App\Models\PreQuestion;
 use Illuminate\Http\Request;
+use App\Http\Resources\PreQuestionResource;
+use App\Http\Requests\StorePreQuestionRequest;
+use App\Http\Requests\UpdatePreQuestionRequest;
 
 class PreQuestionController extends Controller
 {
@@ -31,11 +32,15 @@ class PreQuestionController extends Controller
         return new PreQuestionResource(PreQuestion::findOrFail($id));
     }
 
-    public function update(StorePreQuestionRequest $request, $id)
+    public function update(UpdatePreQuestionRequest $request, $id)
     {
-        $pre_question = PreQuestion::findOrFail($id);
-        $pre_question->update($request->only('pre_question'));
+        $pre_question = PreQuestion::find($id);
 
+        if (!$pre_question) {
+            return response()->json(['message' => 'Pre Question not found.']);
+        }
+
+        $pre_question->update($request->only('pre_question'));
         return response()->json([
             'message' => 'Successfully updated Pre Question.',
             'data' => $pre_question->only('pre_question', 'id')

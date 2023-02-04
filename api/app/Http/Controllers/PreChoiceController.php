@@ -20,16 +20,6 @@ class PreChoiceController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StorePreChoiceRequest  $request
@@ -37,7 +27,15 @@ class PreChoiceController extends Controller
      */
     public function store(StorePreChoiceRequest $request)
     {
-        //
+        $pre_choice = PreChoice::create([
+            "pre_question_id" => $request->pre_question_id,
+            "pre_choice" => $request->pre_choice
+        ]);
+
+        return response()->json([
+            'message' => 'Successfully created new Pre Chhoice.',
+            'data' => $pre_choice->only('pre_choice', 'id')
+        ]);
     }
 
     /**
@@ -46,20 +44,9 @@ class PreChoiceController extends Controller
      * @param  \App\Models\PreChoice  $preChoice
      * @return \Illuminate\Http\Response
      */
-    public function show(PreChoice $preChoice)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PreChoice  $preChoice
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PreChoice $preChoice)
-    {
-        //
+        return new PreChoiceResource(PreChoice::findOrFail($id));
     }
 
     /**
@@ -69,9 +56,19 @@ class PreChoiceController extends Controller
      * @param  \App\Models\PreChoice  $preChoice
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePreChoiceRequest $request, PreChoice $preChoice)
+    public function update(UpdatePreChoiceRequest $request, $id)
     {
-        //
+        $pre_choice = PreChoice::find($id);
+
+        if (!$pre_choice) {
+            return response()->json(['message' => 'Pre Chhoice not found.']);
+        }
+
+        $pre_choice->update($request->only('pre_choice'));
+        return response()->json([
+            'message' => 'Successfully updated Pre Chhoice.',
+            'data' => $pre_choice->only('pre_choice', 'id')
+        ]);
     }
 
     /**
@@ -80,8 +77,15 @@ class PreChoiceController extends Controller
      * @param  \App\Models\PreChoice  $preChoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PreChoice $preChoice)
+    public function destroy($id)
     {
-        //
+        $preChoice = PreChoice::find($id);
+
+        if (!$preChoice) {
+            return response()->json(['message' => 'Pre Choice not found.']);
+        }
+
+        $preChoice->delete();
+        return response()->json(['message' => 'Successfully deleted Pre Choice.']);
     }
 }
