@@ -46,7 +46,13 @@ class PreChoiceController extends Controller
      */
     public function show($id)
     {
-        return new PreChoiceResource(PreChoice::findOrFail($id));
+        $pre_choice = PreChoice::find($id);
+
+        if (!$pre_choice) {
+            return response()->json(['message' => 'Pre Choice not found.']);
+        }
+
+        return new PreChoiceResource($pre_choice);
     }
 
     /**
