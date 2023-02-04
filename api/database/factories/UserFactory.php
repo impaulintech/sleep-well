@@ -28,7 +28,7 @@ class UserFactory extends Factory
         $firstName = fake()->firstName();
 
         return [
-            'fullname' => "$firstName $lastName",
+            'full_name' => "$firstName $lastName",
             'email' => "$firstName.$lastName@dummy.com",
             'age' => 21,
             'gender' => fake()->randomElement(['Male', 'Female', 'Non-binary', 'Prefer not to say']),
