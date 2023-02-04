@@ -5,7 +5,7 @@ import Radio from "~/components/organisms/Radio";
 import Questionnaire from "~/components/templates/Questionnaire";
 import { main_questions } from "~/shared/json/main_questions.json";
 
-const PreQuestions: NextPage = (): JSX.Element => {
+const MainQuestions: NextPage = (): JSX.Element => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(0);
   const totalPage = main_questions.length;
@@ -62,4 +62,4 @@ const PreQuestions: NextPage = (): JSX.Element => {
 };
 
 export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
-export default PreQuestions;
+export default MainQuestions;

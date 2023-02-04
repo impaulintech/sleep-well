@@ -1,12 +1,12 @@
 import React from "react";
 
 interface IEllipseIcon {
-  statusColor?: string;
+  status?: string;
   width?: string | number;
   height?: string | number;
 }
 const EllipseIcon = ({
-  statusColor = "#CCB330",
+  status = "inProgress",
   width = "17",
   height = "17",
 }: IEllipseIcon) => {
@@ -15,7 +15,7 @@ const EllipseIcon = ({
     liked: "#2DDA1E",
     disliked: "#CC3030",
   };
-  const currentState = statusColors[statusColor];
+  const currentState = statusColors[status];
 
   return (
     <svg

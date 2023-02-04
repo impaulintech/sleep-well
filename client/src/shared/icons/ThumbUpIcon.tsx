@@ -2,18 +2,26 @@ import React from "react";
 
 interface IThumbUpIcon {
   className?: string;
+  isActive?: boolean;
+  width?: string | number;
+  height?: string | number;
 }
-const ThumbUpIcon = ({ className }: IThumbUpIcon) => {
+const ThumbUpIcon = ({
+  className,
+  width = "20",
+  height = "20",
+  isActive = false,
+}: IThumbUpIcon) => {
   return (
     <svg
-      width="20"
-      height="20"
+      width={width}
+      height={height}
       viewBox="0 0 20 20"
       fill="none"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g opacity="0.6">
+      <g opacity={`${isActive ? "1.0" : "0.6"}`}>
         <path
           d="M2 10.5C2 9.67157 2.67157 9 3.5 9C4.32843 9 5 9.67157 5 10.5V16.5C5 17.3284 4.32843 18 3.5 18C2.67157 18 2 17.3284 2 16.5V10.5Z"
           fill="#F4EEE8"
