@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Routing\Controller;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UpdateUserRequest;
 
 
 class UserController extends Controller
@@ -30,6 +31,16 @@ class UserController extends Controller
     {
         $userId = auth()->id();
         $user = User::findOrFail($userId);
+        $request->validate(['password' => ['sometimes', 'required', 'confirmed']]);
+
+        if($request->current_password || $request->password_confirmation || $request->password){
+            if (!$request->password) {
+                return response()->json(['error' => 'New password is required.'], 400);
+            }
+            if (!Hash::check($request->current_password, $user->password)) {
+                return response()->json(['error' => 'The provided current password is incorrect.'], 400);
+            }
+        }
 
         $user->update([
             'full_name' => $request->full_name ?: $user->full_name,
@@ -37,7 +48,7 @@ class UserController extends Controller
             'age' => $request->age ?: $user->age,
             'gender' => $request->gender ?: $user->gender,
             'avatar' => $request->avatar ? $user->generateAvatar($user->replaceAndLower($user->full_name), $userId) : $user->avatar,
-            'password' => $request->password ?: $user->password,
+            'password' => $request->filled('password') ? bcrypt($request->password) : $user->password,
         ]);
 
         return response()->json([
