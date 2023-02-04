@@ -22,6 +22,7 @@ export default function Home() {
     {
       id: 2,
       question: "2Lorem ipsum dolor sit amet.",
+      answer: "yes",
       recommendation: "Lorem ipsum, dolor sit amet.",
       like: 2,
       dislike: 1,
@@ -69,7 +70,7 @@ export default function Home() {
             recommendations.map((recommendation) => {
               return (
                 <div key={recommendation.id}>
-                  <Accordion title="In Progress">
+                  <Accordion status="inProgress" title="In Progress">
                     <div className="flex flex-col space-y-4 pb-4">
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">
@@ -81,13 +82,17 @@ export default function Home() {
                         <h3 className="text-xl font-medium text-swell-30">
                           Your Answer:
                         </h3>
-                        <p className="text-base">{recommendation.answer}</p>
+                        <p className="text-base">
+                          {recommendation.answer.toUpperCase()}
+                        </p>
                       </div>
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">
                           Recommendation:
                         </h3>
-                        <p className="text-base">{recommendation.recommendation}</p>
+                        <p className="text-base">
+                          {recommendation.recommendation}
+                        </p>
                       </div>
                     </div>
                   </Accordion>
