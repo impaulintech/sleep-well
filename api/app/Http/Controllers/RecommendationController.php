@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Recommendation;
 use App\Http\Requests\StoreRecommendationRequest;
 use App\Http\Requests\UpdateRecommendationRequest;
+use App\Http\Resources\RecommendationResource;
 
 class RecommendationController extends Controller
 {
@@ -15,17 +16,7 @@ class RecommendationController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return RecommendationResource::collection(Recommendation::get());
     }
 
     /**
@@ -36,7 +27,15 @@ class RecommendationController extends Controller
      */
     public function store(StoreRecommendationRequest $request)
     {
-        //
+        $recommendation = Recommendation::create([
+            "main_choice_id" => $request->main_choice_id,
+            "recommendation" => $request->recommendation
+        ]);
+
+        return response()->json([
+            'message' => 'Successfully created new Recommendation.',
+            'data' => $recommendation->only('recommendation', 'id')
+        ]);
     }
 
     /**
@@ -45,20 +44,15 @@ class RecommendationController extends Controller
      * @param  \App\Models\Recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */
-    public function show(Recommendation $recommendation)
+    public function show($id)
     {
-        //
-    }
+        $recommendation = Recommendation::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Recommendation  $recommendation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Recommendation $recommendation)
-    {
-        //
+        if (!$recommendation) {
+            return response()->json(['message' => 'Recommendation not found.']);
+        }
+
+        return new RecommendationResource($recommendation);
     }
 
     /**
@@ -68,9 +62,19 @@ class RecommendationController extends Controller
      * @param  \App\Models\Recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRecommendationRequest $request, Recommendation $recommendation)
+    public function update(UpdateRecommendationRequest $request, $id)
     {
-        //
+        $recommendation = Recommendation::find($id);
+
+        if (!$recommendation) {
+            return response()->json(['message' => 'Recommendation not found.']);
+        }
+
+        $recommendation->update($request->only('recommendation'));
+        return response()->json([
+            'message' => 'Successfully updated Recommendation.',
+            'data' => $recommendation->only('recommendation', 'id')
+        ]);
     }
 
     /**
@@ -79,8 +83,15 @@ class RecommendationController extends Controller
      * @param  \App\Models\Recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recommendation $recommendation)
+    public function destroy($id)
     {
-        //
+        $recommendation = Recommendation::find($id);
+
+        if (!$recommendation) {
+            return response()->json(['message' => 'Recommendation not found.']);
+        }
+
+        $recommendation->delete();
+        return response()->json(['message' => 'Successfully deleted Recommendation.']);
     }
 }

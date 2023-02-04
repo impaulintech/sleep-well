@@ -20,8 +20,8 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->string('recommendation');
-            $table->integer('like_counts');
-            $table->integer('dislike_counts');
+            $table->integer('like_counts')->default(0);
+            $table->integer('dislike_counts')->default(0);
             $table->timestamps();
         });
     }
