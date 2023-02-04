@@ -94,4 +94,13 @@ class MainQuestionController extends Controller
         $mainQuestion->delete();
         return response()->json(['message' => 'Successfully deleted Main Question.']);
     }
+
+    public function assessment()
+    {
+        $main_questions = MainQuestion::with('mainChoices')->get();
+
+        return response()->json([
+            'main_questions' => $main_questions,
+        ]);
+    }
 }
