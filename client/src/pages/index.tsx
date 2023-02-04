@@ -9,8 +9,6 @@ import UserSettingModal from "~/components/molecules/UserSettingsModal";
 
 export default function Home() {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const message =
-    "You completed all the recommendations for better sleep habits. ";
 
   const recommendations = [
     {
@@ -37,6 +35,10 @@ export default function Home() {
       dislike: 1,
     },
   ];
+  const message =
+    recommendations.length === 0
+      ? "You completed all the recommendations for better sleep habits. "
+      : "Complete all recommendations before taking new assessment for better sleep habits.";
 
   const handleClick = () => {
     setShowModal(true);
@@ -73,19 +75,19 @@ export default function Home() {
                         <h3 className="text-xl font-medium text-swell-30">
                           Question:
                         </h3>
-                        <p>{recommendation.question}</p>
+                        <p className="text-base">{recommendation.question}</p>
                       </div>
-                      <div className="flex space-x-2">
+                      <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">
                           Your Answer:
                         </h3>
-                        <p>{recommendation.answer}</p>
+                        <p className="text-base">{recommendation.answer}</p>
                       </div>
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">
                           Recommendation:
                         </h3>
-                        <p>{recommendation.recommendation}</p>
+                        <p className="text-base">{recommendation.recommendation}</p>
                       </div>
                     </div>
                   </Accordion>
