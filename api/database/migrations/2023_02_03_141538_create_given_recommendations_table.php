@@ -32,8 +32,8 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->integer('like');
-            $table->integer('dislike');
+            $table->integer('like')->default(false);
+            $table->integer('dislike')->default(false);
             $table->timestamps();
         });
     }

@@ -24,7 +24,9 @@ class UpdateRecommendationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'recommendation' => 'required|string',
+            'like' => 'nullable|boolean',
+            'dislike' => 'nullable|boolean'
         ];
     }
 }
