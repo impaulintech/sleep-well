@@ -52,7 +52,7 @@ class User extends Authenticatable
     public static function registerUser($request)
     {
         $user = User::create([
-            'fullname' => $request->fullname,
+            'full_name' => $request->full_name,
             'email' => $request->email,
             'age' => $request->age,
             'gender' => $request->gender,
@@ -60,7 +60,7 @@ class User extends Authenticatable
         ]);
         $user_id = $user->id;
 
-        $avatar = User::generateAvatar($request->first_name, $user_id);
+        $avatar = User::generateAvatar($request->full_name, $user_id);
         $user->findOrFail($user_id)->update(["avatar" => $avatar]);
 
         return $user;
@@ -68,7 +68,12 @@ class User extends Authenticatable
 
     public static function generateAvatar($fname, $user_id)
     {
-        $first_name = str_replace(' ', '', strtolower($fname));
-        return "https://api.multiavatar.com/$first_name&id=$user_id.png";
+        $full_name = str_replace(' ', '', strtolower($fname));
+        return "https://api.multiavatar.com/$full_name&id=$user_id&unique=" . uniqid() . ".png";
+    }
+
+    public static function replaceAndLower($value)
+    {
+        return str_replace(' ', '', strtolower($value));
     }
 }
