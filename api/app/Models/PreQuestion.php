@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\MainQuestion;
+use App\Models\PreChoice;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,6 +14,6 @@ class PreQuestion extends Model
 
     public function preChoices()
     {
-        return $this->hasMany(MainQuestion::class);
+        return $this->hasMany(PreChoice::class);
     }
 }

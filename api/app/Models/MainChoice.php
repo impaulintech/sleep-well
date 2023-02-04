@@ -18,7 +18,7 @@ class MainChoice extends Model
         return $this->hasMany(Recommendation::class);
     }
 
-    public function mainQuestions()
+    public function mainQuestion()
     {
         return $this->belongsTo(MainQuestion::class);
     }

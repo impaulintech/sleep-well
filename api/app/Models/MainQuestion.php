@@ -18,7 +18,7 @@ class MainQuestion extends Model
         return $this->hasMany(MainChoice::class);
     }
 
-    public function preChoices()
+    public function preChoice()
     {
         return $this->belongsTo(PreChoice::class);
     }

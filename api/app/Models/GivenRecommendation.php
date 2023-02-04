@@ -15,22 +15,22 @@ class GivenRecommendation extends Model
 
     protected $guarded = [];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function mainQuestions()
+    public function mainQuestion()
     {
         return $this->belongsTo(MainQuestion::class);
     }
 
-    public function mainChoices()
+    public function mainChoice()
     {
         return $this->belongsTo(MainChoice::class);
     }
 
-    public function recommendations()
+    public function recommendation()
     {
         return $this->belongsTo(Recommendation::class);
     }

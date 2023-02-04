@@ -18,7 +18,7 @@ class Recommendation extends Model
         return $this->hasMany(GivenRecommendation::class);
     }
 
-    public function mainChoices()
+    public function mainChoice()
     {
         return $this->belongsTo(MainChoice::class);
     }
