@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePreChoiceRequest extends FormRequest
+class UpdatePreQuestionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class StorePreChoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'pre_choice' => 'required|string',
-            'pre_question_id' => 'required|numeric'
+            'id' => 'numeric|string',
+            'pre_question' => 'required|string'
         ];
     }
 }
