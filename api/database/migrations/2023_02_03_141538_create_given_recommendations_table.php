@@ -16,6 +16,10 @@ return new class extends Migration
         Schema::create('given_recommendations', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_completed');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->foreignId('main_question_id')
                 ->constrained()
                 ->cascadeOnUpdate()
