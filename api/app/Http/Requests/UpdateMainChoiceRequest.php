@@ -24,7 +24,7 @@ class UpdateMainChoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'main_choice' => 'required|string',
         ];
     }
 }

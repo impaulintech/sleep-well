@@ -46,7 +46,13 @@ class MainQuestionController extends Controller
      */
     public function show($id)
     {
-        return new MainQuestionResource(MainQuestion::findOrFail($id));
+        $main_question = MainQuestion::find($id);
+
+        if (!$main_question) {
+            return response()->json(['message' => 'Main Question not found.']);
+        }
+
+        return new MainQuestionResource($main_question);
     }
 
     /**

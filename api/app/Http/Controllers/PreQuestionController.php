@@ -29,7 +29,13 @@ class PreQuestionController extends Controller
 
     public function show($id)
     {
-        return new PreQuestionResource(PreQuestion::findOrFail($id));
+        $pre_question = PreQuestion::find($id);
+
+        if (!$pre_question) {
+            return response()->json(['message' => 'Pre Question not found.']);
+        }
+
+        return new PreQuestionResource($pre_question);
     }
 
     public function update(UpdatePreQuestionRequest $request, $id)
