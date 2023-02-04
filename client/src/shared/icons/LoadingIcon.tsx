@@ -10,6 +10,7 @@ const LoadingIcon = ({ className }: ILoadingIcon) => {
       height="30"
       viewBox="0 0 30 30"
       fill="none"
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >

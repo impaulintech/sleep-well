@@ -1,6 +1,6 @@
 import { Menu } from "@headlessui/react";
 
-import ChevronDown from "~/shared/icons/ChevronDown";
+import ChevronDownIcon from "~/shared/icons/ChevronDownIcon";
 
 interface IDropdown {
   name: string;
@@ -24,7 +24,7 @@ const Dropdown = ({ name, value, defaultValue, list, onSelect }: IDropdown) => {
     >
       <Menu.Button className="flex w-full items-center justify-between">
         <div>{value || defaultValue}</div>
-        <ChevronDown />
+        <ChevronDownIcon />
       </Menu.Button>
       <Menu.Items className="absolute w-full top-0 left-0 translate-y-1/3 bg-white rounded border-2">
         <div className="flex flex-col divide-y-2">

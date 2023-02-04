@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 
-import NextHead from "~/components/atoms/NextHead";
-import Button from "~/components/atoms/Button";
 import Loader from "../Loader";
+import Button from "~/components/atoms/Button";
+import NextHead from "~/components/atoms/NextHead";
 
 interface IRecommendation {
   totalPage: number;
@@ -43,10 +43,11 @@ const Recommendation = ({
         <div className="flex flex-col h-screen justify-between">
           <div>
             <div className="flex justify-between">
-              <NextHead title="SleepWell | Recommendation"></NextHead>
-              <div className="text-xl font-medium mt-5">
-                {currentPage + 1}/{totalPage}
-              </div>
+              <NextHead title="SleepWell | Recommendation">
+                <div className="flex items-center text-xl font-medium">
+                  {currentPage + 1}/{totalPage}
+                </div>
+              </NextHead>
             </div>
             <section className="flex flex-col items-center mb-7">
               <Image

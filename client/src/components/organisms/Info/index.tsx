@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-import NextHead from "~/components/atoms/NextHead";
 import Button from "~/components/atoms/Button";
+import NextHead from "~/components/atoms/NextHead";
 import Loader from "~/components/templates/Loader";
 
 interface IInfo {
@@ -44,7 +44,7 @@ const Info = ({ result }: IInfoPage) => {
             alt="welcome"
             width="400"
             height="400"
-            className="w-[205px] h-[160px]"
+            className=""
           ></Image>
         </section>
         <div className="flex flex-col w-full space-y-4">

@@ -1,24 +1,3 @@
-// export const AdminSignInOutAuthCheck = ({ req }: any) => {
-//   const token = req?.cookies["token"];
-//   const path = req?.url;
-
-import { getCookie } from "cookies-next";
-import { redirect } from "next/dist/server/api-utils";
-
-//   if (!token) {
-//     return {
-//       redirect: {
-//         destination: "/login",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {},
-//   };
-// };
-
 export const UserSignInOutAuthCheck = async ({ req }: any) => {
   const token = req?.cookies["token"];
   const path = req?.url;
@@ -28,6 +7,7 @@ export const UserSignInOutAuthCheck = async ({ req }: any) => {
     path.includes("pre-question"),
     path.includes("main-question"),
     path.includes("recommendations"),
+    path.includes("check-list"),
   ];
 
   const publicRoutes = [path.includes("login"), path.includes("register")];

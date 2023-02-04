@@ -1,9 +1,9 @@
-import NextHead from "~/components/atoms/NextHead";
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 
 import redirect from "~/shared/utils/redirect";
-import LoadingIcon from "~/shared/icons/Loading";
+import NextHead from "~/components/atoms/NextHead";
+import LoadingIcon from "~/shared/icons/LoadingIcon";
 
 const Loader = ({ message, url }: { url?: string; message?: string }) => {
   setTimeout(() => {
