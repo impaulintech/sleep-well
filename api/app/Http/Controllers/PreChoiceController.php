@@ -33,7 +33,7 @@ class PreChoiceController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Successfully created new Pre Chhoice.',
+            'message' => 'Successfully created new Pre Choice.',
             'data' => $pre_choice->only('pre_choice', 'id')
         ]);
     }
@@ -61,12 +61,12 @@ class PreChoiceController extends Controller
         $pre_choice = PreChoice::find($id);
 
         if (!$pre_choice) {
-            return response()->json(['message' => 'Pre Chhoice not found.']);
+            return response()->json(['message' => 'Pre Choice not found.']);
         }
 
         $pre_choice->update($request->only('pre_choice'));
         return response()->json([
-            'message' => 'Successfully updated Pre Chhoice.',
+            'message' => 'Successfully updated Pre Choice.',
             'data' => $pre_choice->only('pre_choice', 'id')
         ]);
     }
