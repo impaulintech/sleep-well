@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PreChoice;
+use App\Models\MainChoice;
 use App\Models\MainQuestion;
+use Illuminate\Http\Request;
+use App\Http\Resources\MainQuestionResource;
 use App\Http\Requests\StoreMainQuestionRequest;
 use App\Http\Requests\UpdateMainQuestionRequest;
-use App\Http\Resources\MainQuestionResource;
 
 class MainQuestionController extends Controller
 {
@@ -95,12 +98,18 @@ class MainQuestionController extends Controller
         return response()->json(['message' => 'Successfully deleted Main Question.']);
     }
 
-    public function assessment()
+    public function assessment(Request $request)
     {
-        $main_questions = MainQuestion::with('mainChoices')->get();
+        $main_questions = MainQuestion::whereIn('pre_choice_id', collect($request)->pluck('pre_choice'))->get();
+
+        $main_choices = MainQuestion::with(['mainChoices' => function ($query) use ($main_questions) {
+            $query->whereIn('id', $main_questions->pluck('id'));
+        }])->get()->filter(function ($main_question) {
+            return count($main_question->mainChoices) > 0;
+        });
 
         return response()->json([
-            'main_questions' => $main_questions,
+            'main_questions' => array_values($main_choices->toArray()),
         ]);
     }
 }

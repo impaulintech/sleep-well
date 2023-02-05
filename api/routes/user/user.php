@@ -12,5 +12,5 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/user'], function () 
     Route::put('/update', [UserController::class, 'update']);
 
     Route::get('/pre-questions', [PreQuestionController::class, 'assessment']);
-    Route::get('/main-questions', [MainQuestionController::class, 'assessment']);
+    Route::post('/main-questions', [MainQuestionController::class, 'assessment']);
 });
