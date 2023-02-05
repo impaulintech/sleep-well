@@ -6,7 +6,7 @@ import NextHead from "~/components/atoms/NextHead";
 import Loader from "~/components/templates/Loader";
 
 interface IInfo {
-  fullname?: string;
+  full_name?: string;
   age?: number;
 }
 
@@ -18,7 +18,7 @@ const Info = ({ result }: IInfoPage) => {
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
   const initialInfo = {
-    fullname: "",
+    full_name: "",
     age: 0,
   };
 
@@ -49,17 +49,17 @@ const Info = ({ result }: IInfoPage) => {
         </section>
         <div className="flex flex-col w-full space-y-4">
           <div className="text-center space-y-2">
-            <label htmlFor="fullname" className="text-3xl font-semibold">
+            <label htmlFor="full_name" className="text-3xl font-semibold">
               What is your full name?
             </label>
             <input
               onChange={(e) => {
-                setInfo({ ...info, fullname: e.target.value });
+                setInfo({ ...info, full_name: e.target.value });
               }}
               type="text"
               className="flex w-full text-center font-medium rounded border-swell-30 border-2 text-lg bg-white px-4 py-3"
               placeholder="John Doe"
-              id="fullname"
+              id="full_name"
             />
           </div>
           <div className="text-center space-y-2">
@@ -81,7 +81,8 @@ const Info = ({ result }: IInfoPage) => {
       <div className="flex flex-col space-y-5 pb-16">
         <Button
           isDisabled={
-            info.fullname == initialInfo.fullname || info.age == initialInfo.age
+            info.full_name == initialInfo.full_name ||
+            info.age == initialInfo.age
           }
           onClick={handleNext}
         >

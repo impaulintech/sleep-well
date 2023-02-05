@@ -4,7 +4,7 @@ export interface IUserParams {
   email?: string;
   password?: string;
   password_confirmation?: string;
-  fullname?: string;
+  full_name?: string;
   gender?: string;
   age?: number;
 }

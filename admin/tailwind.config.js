@@ -11,6 +11,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        gray: "#d9d9d9", //gray
         dark: "#242830", //black
         light: "#FFFFFF",
         success: "#2DDA1E", // green
@@ -20,8 +21,10 @@ module.exports = {
           10: "#367CFF", // blue
           30: "#3D2988", // purple
           60: "#F4EEE8", // dirty-white
-          dark: "#0B061E", // very dark purple
+          dark: "#0B061E", // dark purple
+          vdark: "#261A55", // very dark purple
           light: "#775DE0", // light purple
+          card: "#BFCBE0", // card
         },
         btn: {
           1: "#3D2988",
