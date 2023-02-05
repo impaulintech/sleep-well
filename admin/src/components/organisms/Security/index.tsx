@@ -2,11 +2,13 @@ import { useState } from "react";
 
 import Input from "~/components/atoms/Input";
 import Button from "~/components/atoms/Button";
+import UserApi from "~/api/admin/UserApi";
+import { toast } from "react-hot-toast";
 
 const Security = () => {
   const initialParams = {
-    old_password: "",
-    new_password: "",
+    current_password: "",
+    password: "",
     password_confirmation: "",
   };
 
@@ -17,8 +19,11 @@ const Security = () => {
   };
 
   const handleSubmit = () => {
-    // API call here...
-    console.log(params);
+    toast.promise(UserApi.updateUser(params), {
+      loading: "Loading..",
+      success: (data) => `Password updated!`,
+      error: (err) => `${err.response.data.message}`,
+    });
   };
 
   return (
@@ -27,14 +32,14 @@ const Security = () => {
         <div className="flex flex-col">
           <Input
             type="password"
-            name="old_password"
+            name="current_password"
             label="Old Password"
             placeholder="••••••••"
             onChange={handleSecurityChange}
           />
           <Input
             type="password"
-            name="new_password"
+            name="password"
             label="New Password"
             placeholder="••••••••"
             onChange={handleSecurityChange}
