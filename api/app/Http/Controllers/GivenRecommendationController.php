@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MainChoice;
+use App\Models\Recommendation;
 use App\Models\GivenRecommendation;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\GivenRecommendationResource;
 use App\Http\Requests\StoreGivenRecommendationRequest;
 use App\Http\Requests\UpdateGivenRecommendationRequest;
 
@@ -15,17 +19,15 @@ class GivenRecommendationController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $user_id = Auth::id();
+        $given_recommendations = GivenRecommendationResource::collection(GivenRecommendation::where('user_id', $user_id)->get());
+        $latest_recommendations = $given_recommendations->where('is_completed', false);
+        $completed_recommendations = $given_recommendations->where('is_completed', true);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json([
+            "latest" => $latest_recommendations,
+            "completed" => $completed_recommendations
+        ]);
     }
 
     /**
@@ -36,7 +38,37 @@ class GivenRecommendationController extends Controller
      */
     public function store(StoreGivenRecommendationRequest $request)
     {
-        //
+        $user_id = Auth::id();
+        foreach ($request->all() as $mainQuestion) {
+            $activeMainQuestion = $mainQuestion['main_question_id'];
+            $selectedMainChoice = $mainQuestion['main_choice_id'];
+
+            $availableRecommendations = Recommendation::where('main_choice_id', $selectedMainChoice)->get();
+            $recommendationLastIndex = $availableRecommendations[count($availableRecommendations) - 1]->id;
+            $randomRecommendation = rand($availableRecommendations[0]->id, $recommendationLastIndex);
+
+            $bestRecommendationId = 0;
+            $bestRecommendation = 0;
+
+            foreach ($availableRecommendations as $recommendation) {
+                $difference = $recommendation['like_counts'] - $recommendation['dislike_counts'];
+                if ($difference > $bestRecommendation) {
+                    $bestRecommendation = $difference;
+                    $bestRecommendationId = $recommendation->id;
+                }
+            }
+
+            GivenRecommendation::create([
+                'user_id' => $user_id,
+                'main_question_id' => $activeMainQuestion,
+                'main_choice_id' => $selectedMainChoice,
+                'recommendation_id' => $bestRecommendationId ?: $randomRecommendation
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Given Recommendations saved successfully.'
+        ], 201);
     }
 
     /**
@@ -46,17 +78,6 @@ class GivenRecommendationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(GivenRecommendation $givenRecommendation)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\GivenRecommendation  $givenRecommendation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(GivenRecommendation $givenRecommendation)
     {
         //
     }

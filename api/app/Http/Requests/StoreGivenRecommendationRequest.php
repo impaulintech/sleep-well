@@ -24,7 +24,12 @@ class StoreGivenRecommendationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            '*.main_question_id' => 'required|numeric',
+            '*.main_choice_id' => 'required|numeric',
+            'recommendation_id' => 'nullable|numeric',
+            'like' => 'nullable|boolean',
+            'dislike' => 'nullable|boolean',
+            'is_completed' => 'nullable|boolean',
         ];
     }
 }
