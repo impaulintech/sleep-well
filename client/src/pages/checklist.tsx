@@ -4,50 +4,26 @@ import NextHead from "~/components/atoms/NextHead";
 import Accordion from "~/components/atoms/Accordion";
 import SettingsIcon from "~/shared/icons/SettingsIcon";
 import FooterNavbar from "~/components/atoms/FooterNavbar";
+import AssessmentCard from "~/components/molecules/AssessmentCard";
 import UserSettingModal from "~/components/molecules/UserSettingsModal";
-import HistoryProfileCard from "~/components/molecules/HistoryProfileCard";
-import moment from "moment";
 
-const History = () => {
-  // dummy profile
-  const profile = {
-    full_name: "John Doe",
-    created_at: "20221101",
-    completed_recommendations_count: 21,
-  };
+export default function Home() {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const recommendations = [
     {
       id: 1,
-      status: "liked",
       question: "1Lorem ipsum dolor sit amet.",
       answer: "yes",
       recommendation: "Lorem ipsum, dolor sit amet.",
       like: 3,
       dislike: 1,
-      updated_at: "20230212",
-    },
-    {
-      id: 2,
-      status: "liked",
-      question: "2Lorem ipsum dolor sit amet.",
-      recommendation: "Lorem ipsum, dolor sit amet.",
-      like: 2,
-      dislike: 1,
-      updated_at: "20230212",
-    },
-    {
-      id: 3,
-      status: "disliked",
-      question: "3Lorem ipsum dolor sit amet.",
-      answer: "yes",
-      recommendation: "Lorem ipsum, dolor sit amet.",
-      like: 1,
-      dislike: 1,
-      updated_at: "20230212",
-    },
+    }
   ];
+  const message =
+    recommendations.length === 0
+      ? "You completed all the recommendations for better sleep habits. "
+      : "Complete all recommendations before taking new assessment for better sleep habits.";
 
   const handleClick = () => {
     setShowModal(true);
@@ -66,17 +42,11 @@ const History = () => {
         </div>
 
         {/* Top section */}
-        <HistoryProfileCard
-          full_name={profile.full_name}
-          created_at={profile.created_at}
-          completed_recommendations_count={
-            profile.completed_recommendations_count
-          }
-        />
+        <AssessmentCard recommendations={recommendations} message={message} />
 
         {/* Recommendation content */}
         <h1 className="text-xl font-medium border-b-2">
-          Completed recommendations
+          Latest recommendations
         </h1>
 
         <section className="flex flex-col space-y-2">
@@ -84,13 +54,7 @@ const History = () => {
             recommendations.map((recommendation) => {
               return (
                 <div key={recommendation.id}>
-                  <Accordion
-                    isDisabledButtons={true}
-                    status={recommendation.status}
-                    title={moment(recommendation.updated_at).format(
-                      "MM Do YYYY"
-                    )}
-                  >
+                  <Accordion status="inProgress" title="In Progress">
                     <div className="flex flex-col space-y-4 pb-4">
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">
@@ -103,7 +67,7 @@ const History = () => {
                           Your Answer:
                         </h3>
                         <p className="text-base">
-                          {recommendation.answer?.toUpperCase()}
+                          {recommendation.answer.toUpperCase()}
                         </p>
                       </div>
                       <div className="flex flex-col space-y-2">
@@ -126,11 +90,10 @@ const History = () => {
           )}
         </section>
         {/* footer */}
-        <FooterNavbar activePage="profile"/>
+        <FooterNavbar activePage="checklist"/>
       </div>
     </>
   );
-};
+}
 
 // export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
-export default History;

@@ -7,7 +7,7 @@ export const UserSignInOutAuthCheck = async ({ req }: any) => {
     path.includes("pre-question"),
     path.includes("main-question"),
     path.includes("recommendations"),
-    path.includes("check-list"),
+    path.includes("checklist"),
   ];
 
   const publicRoutes = [path.includes("login"), path.includes("register")];
@@ -17,7 +17,7 @@ export const UserSignInOutAuthCheck = async ({ req }: any) => {
   if (!token) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/",
         permanent: false,
       },
     };
@@ -26,7 +26,7 @@ export const UserSignInOutAuthCheck = async ({ req }: any) => {
   if (privateRoutes.includes(true) && !token) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/",
         permanent: false,
       },
     };

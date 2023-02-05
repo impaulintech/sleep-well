@@ -26,7 +26,7 @@ const Register: NextPage = (): JSX.Element => {
   const handleSubmit = () => {
     toast.promise(
       AuthApi.register(params).then(() => {
-        redirect("/login");
+        redirect("/");
       }),
       {
         loading: "Loading..",
@@ -76,7 +76,7 @@ const Register: NextPage = (): JSX.Element => {
           ></Input>
           <div className="flex w-full mt-4 justify-center font-medium text-base">
             <p>Already have an account?&nbsp;</p>
-            <Link href="/login" className="text-swell-30">
+            <Link href="/" className="text-swell-30">
               Login
             </Link>
           </div>
@@ -89,5 +89,5 @@ const Register: NextPage = (): JSX.Element => {
   );
 };
 
-export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
+// export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
 export default Register;

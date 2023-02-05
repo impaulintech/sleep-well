@@ -13,11 +13,11 @@ const MainQuestions: NextPage = (): JSX.Element => {
   const [result, setResult] = useState<any[]>([]);
 
   const [value, setValue] = useState({});
-
+console.log(result)
   const handleOnchange = (event: any) => {
     const newValue = {
-      pre_question: main_questions[currentPage].id,
-      pre_choice: event.id,
+      main_question: main_questions[currentPage].id,
+      main_choice: event.id,
     };
 
     setValue({
@@ -61,5 +61,5 @@ const MainQuestions: NextPage = (): JSX.Element => {
   );
 };
 
-export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
+// export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
 export default MainQuestions;
