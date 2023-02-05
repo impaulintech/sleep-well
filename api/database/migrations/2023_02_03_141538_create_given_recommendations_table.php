@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('given_recommendations', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_completed');
+            $table->boolean('is_completed')->default(false);
             $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnUpdate()

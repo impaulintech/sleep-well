@@ -24,7 +24,9 @@ class UpdateGivenRecommendationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'like' => 'nullable|boolean',
+            'dislike' => 'nullable|boolean',
+            'is_completed' => 'nullable|boolean',
         ];
     }
 }

@@ -13,6 +13,8 @@ class MainQuestion extends Model
 
     protected $guarded = [];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     public function mainChoices()
     {
         return $this->hasMany(MainChoice::class);
