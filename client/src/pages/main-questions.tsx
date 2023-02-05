@@ -1,23 +1,26 @@
 import { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import Assessment from "~/api/user/Assessment";
 
 import Radio from "~/components/organisms/Radio";
 import Questionnaire from "~/components/templates/Questionnaire";
-import { main_questions } from "~/shared/json/main_questions.json";
+import { GlobalContext } from "~/context/GlobalContext";
 
 const MainQuestions: NextPage = (): JSX.Element => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(0);
+  const { main, recommendation } = useContext(GlobalContext) as any;
+  const [main_questions] = main;
+  const [_, setGivenRecommendations] = recommendation;
   const totalPage = main_questions.length;
 
   const [result, setResult] = useState<any[]>([]);
-
   const [value, setValue] = useState({});
-console.log(result)
+
   const handleOnchange = (event: any) => {
     const newValue = {
-      main_question: main_questions[currentPage].id,
-      main_choice: event.id,
+      main_question_id: main_questions[currentPage].id,
+      main_choice_id: event.id,
     };
 
     setValue({
@@ -27,9 +30,16 @@ console.log(result)
 
     setButtonDisabled(false);
   };
-
+  
   const handleNext = () => {
     setResult([...result, value]);
+    if (currentPage == totalPage - 1) {
+      Assessment.setRecommendations([...result, value]).then((_) => {
+        Assessment.getRecommendations().then((res) => {
+          setGivenRecommendations(res?.data);
+        });
+      });
+    }
   };
 
   return (
@@ -43,7 +53,7 @@ console.log(result)
         image={"/images/main-question.png"}
         imageHeight="216"
         imageWidth="260"
-        loaderUrl={"/"}
+        loaderUrl={"/recommendations"}
         loaderMessage={"Generating Recommendations"}
         hasGetResult={true}
         finalButtonMessage="Get Result"

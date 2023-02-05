@@ -1,14 +1,17 @@
 import { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import Radio from "~/components/organisms/Radio";
-import Questionnaire from "~/components/templates/Questionnaire";
-import { useEffect } from "react";
 import Assessment from "~/api/user/Assessment";
+import Radio from "~/components/organisms/Radio";
+import { GlobalContext } from "~/context/GlobalContext";
+import Questionnaire from "~/components/templates/Questionnaire";
 
 const PreQuestions: NextPage = (): JSX.Element => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(0);
+  const {
+    main: [_, set_main_questions],
+  } = useContext(GlobalContext) as any;
   const [pre_questions, set_pre_questions] = useState<any>([
     {
       pre_question: "Loading...",
@@ -24,13 +27,13 @@ const PreQuestions: NextPage = (): JSX.Element => {
 
   const [result, setResult] = useState<any[]>([]);
   const [value, setValue] = useState({});
-  
+
   useEffect(() => {
     Assessment.preQuestions().then((res) => {
       set_pre_questions(res?.data?.pre_questions);
     });
   }, []);
-  
+
   const handleOnchange = (event: any) => {
     const newValue = {
       pre_question: pre_questions[currentPage].id,
@@ -47,6 +50,9 @@ const PreQuestions: NextPage = (): JSX.Element => {
 
   const handleNext = () => {
     setResult([...result, value]);
+    Assessment.mainQuestions([...result, value]).then((res) => {
+      set_main_questions(res?.data?.main_questions);
+    });
   };
 
   return (
