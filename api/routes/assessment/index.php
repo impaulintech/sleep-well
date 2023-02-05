@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminManagementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PreChoiceController;
 use App\Http\Controllers\MainChoiceController;
@@ -15,4 +16,10 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/assessment'], functi
     Route::resource('/main-choices', MainChoiceController::class);
 
     Route::resource('/recommendations', RecommendationController::class);
+
+    Route::resource('/admin', AdminManagementController::class);
+});
+
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/admin'], function () {
+    Route::resource('/assessment', AdminManagementController::class);
 });
