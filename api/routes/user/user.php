@@ -7,6 +7,7 @@ use App\Http\Controllers\MainQuestionController;
 use App\Http\Controllers\GivenRecommendationController;
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/user'], function () {
+    Route::get('/{id}', [UserController::class, 'show']);
     Route::put('/update', [UserController::class, 'update']);
 
     Route::get('/pre-questions', [PreQuestionController::class, 'assessment']);
