@@ -8,7 +8,7 @@ import RefreshIcon from "~/shared/icons/RefreshIcon";
 
 const Profile = () => {
   const initialParams = {
-    fullname: "",
+    full_name: "",
     email: "",
     gender: "",
     age: 0,
@@ -55,7 +55,7 @@ const Profile = () => {
       <div>
         <Input
           label="Fullname"
-          name="fullname"
+          name="full_name"
           placeholder="John Doe"
           onChange={handleChange}
         />

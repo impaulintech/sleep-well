@@ -2,16 +2,15 @@ export const AdminSignInOutAuthCheck = async ({ req }: any) => {
   const token = req?.cookies["token"];
   const path = req?.url;
 
-  const privateRoutes = [path.includes("dashboard")];
-
-  const publicRoutes = [path.includes("login"), path.includes("register")];
+  const privateRoutes = [path.includes("/dashboard")];
+  const publicRoutes = [path == "/"];
 
   if (publicRoutes.includes(true) && !token) return { props: {} };
 
   if (!token) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/",
         permanent: false,
       },
     };
@@ -20,7 +19,7 @@ export const AdminSignInOutAuthCheck = async ({ req }: any) => {
   if (privateRoutes.includes(true) && !token) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/",
         permanent: false,
       },
     };

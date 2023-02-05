@@ -8,10 +8,16 @@ import EllipseIcon from "~/shared/icons/EllipseIcon";
 interface IAccordion {
   title: string;
   children: React.ReactNode;
-  status: string;
+  status?: string;
+  isDisabledButtons?: boolean;
 }
 
-const Accordion = ({ title, children, status }: IAccordion) => {
+const Accordion = ({
+  title,
+  children,
+  status,
+  isDisabledButtons = false,
+}: IAccordion) => {
   return (
     <div className=" ">
       <Disclosure>
@@ -25,20 +31,22 @@ const Accordion = ({ title, children, status }: IAccordion) => {
                 </div>
               </Disclosure.Button>
               <div className="flex space-x-4">
-                <div
+                <button
+                  disabled={isDisabledButtons}
                   onClick={() => {
                     console.log("Disliked!");
                   }}
                 >
                   <ThumbDownIcon isActive={status == "disliked"} />
-                </div>
-                <div
+                </button>
+                <button
+                  disabled={isDisabledButtons}
                   onClick={() => {
                     console.log("Liked!");
                   }}
                 >
                   <ThumbUpIcon isActive={status == "liked"} />
-                </div>
+                </button>
               </div>
             </div>
             <Disclosure.Panel className="bg-gray text-base p-5 border-b shadow-lg">

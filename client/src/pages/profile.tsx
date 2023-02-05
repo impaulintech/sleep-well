@@ -6,11 +6,12 @@ import SettingsIcon from "~/shared/icons/SettingsIcon";
 import FooterNavbar from "~/components/atoms/FooterNavbar";
 import UserSettingModal from "~/components/molecules/UserSettingsModal";
 import HistoryProfileCard from "~/components/molecules/HistoryProfileCard";
+import moment from "moment";
 
 const History = () => {
   // dummy profile
   const profile = {
-    fullname: "John Doe",
+    full_name: "John Doe",
     created_at: "20221101",
     completed_recommendations_count: 21,
   };
@@ -25,6 +26,7 @@ const History = () => {
       recommendation: "Lorem ipsum, dolor sit amet.",
       like: 3,
       dislike: 1,
+      updated_at: "20230212",
     },
     {
       id: 2,
@@ -33,6 +35,7 @@ const History = () => {
       recommendation: "Lorem ipsum, dolor sit amet.",
       like: 2,
       dislike: 1,
+      updated_at: "20230212",
     },
     {
       id: 3,
@@ -42,6 +45,7 @@ const History = () => {
       recommendation: "Lorem ipsum, dolor sit amet.",
       like: 1,
       dislike: 1,
+      updated_at: "20230212",
     },
   ];
 
@@ -63,7 +67,7 @@ const History = () => {
 
         {/* Top section */}
         <HistoryProfileCard
-          fullname={profile.fullname}
+          full_name={profile.full_name}
           created_at={profile.created_at}
           completed_recommendations_count={
             profile.completed_recommendations_count
@@ -72,7 +76,7 @@ const History = () => {
 
         {/* Recommendation content */}
         <h1 className="text-xl font-medium border-b-2">
-          Latest recommendations
+          Completed recommendations
         </h1>
 
         <section className="flex flex-col space-y-2">
@@ -80,7 +84,13 @@ const History = () => {
             recommendations.map((recommendation) => {
               return (
                 <div key={recommendation.id}>
-                  <Accordion status={recommendation.status} title="Done">
+                  <Accordion
+                    isDisabledButtons={true}
+                    status={recommendation.status}
+                    title={moment(recommendation.updated_at).format(
+                      "MM Do YYYY"
+                    )}
+                  >
                     <div className="flex flex-col space-y-4 pb-4">
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">

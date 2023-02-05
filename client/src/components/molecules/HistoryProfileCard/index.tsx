@@ -3,13 +3,13 @@ import Image from "next/image";
 import moment from "moment";
 
 interface IHistoryCard {
-  fullname: string;
+  full_name: string;
   completed_recommendations_count: number;
   created_at: string;
 }
 
 const HistoryProfileCard = ({
-  fullname,
+  full_name,
   completed_recommendations_count,
   created_at,
 }: IHistoryCard) => {
@@ -28,7 +28,7 @@ const HistoryProfileCard = ({
       />
       <div className="flex flex-col space-y-4">
         <div className="flex flex-col">
-          <div className="text-xl font-bold">{fullname}</div>
+          <div className="text-xl font-bold">{full_name}</div>
           <p className="text-sm font-normal">
             Joined {moment(created_at, "YYYYMMDD").fromNow()}
           </p>

@@ -10,6 +10,7 @@ import Input from "~/components/atoms/Input";
 import redirect from "~/shared/utils/redirect";
 import Button from "~/components/atoms/Button";
 import NextHead from "~/components/atoms/NextHead";
+import { setBearerToken } from "~/api/instance";
 
 const Login: NextPage = (): JSX.Element => {
   const initialParams = {
@@ -29,8 +30,9 @@ const Login: NextPage = (): JSX.Element => {
         const token = res.data.token;
         const user = res.data.user;
 
+        setBearerToken(token);
         setCookie("token", token);
-        user.fullname ? redirect("/") : redirect("/welcome");
+        user.full_name ? redirect("/") : redirect("/welcome");
       }),
       {
         loading: "Loading",
