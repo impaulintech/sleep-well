@@ -25,7 +25,7 @@ class GivenRecommendationController extends Controller
         $completed_recommendations = $given_recommendations->where('is_completed', true);
 
         return response()->json([
-            "latest" => $latest_recommendations,
+            "latest" => array_values($latest_recommendations->toArray()),
             "completed" => $completed_recommendations
         ]);
     }
@@ -40,17 +40,19 @@ class GivenRecommendationController extends Controller
     {
         $user_id = Auth::id();
         foreach ($request->all() as $mainQuestion) {
-            $activeMainQuestion = $mainQuestion['main_question_id'];
-            $selectedMainChoice = $mainQuestion['main_choice_id'];
+            $active_main_question = $mainQuestion['main_question_id'];
+            $selected_main_choice = $mainQuestion['main_choice_id'];
 
-            $availableRecommendations = Recommendation::where('main_choice_id', $selectedMainChoice)->get();
+            $taken_recommendations = GivenRecommendation::where('user_id', $user_id)->where('is_completed', true)->pluck('recommendation_id');
+            $availableRecommendations = Recommendation::where('main_choice_id', $selected_main_choice)->get();
+            $filteredRecommendations = Recommendation::where('main_choice_id', $selected_main_choice)->whereNotIn('id', $taken_recommendations)->get();
             $recommendationLastIndex = $availableRecommendations[count($availableRecommendations) - 1]->id;
             $randomRecommendation = rand($availableRecommendations[0]->id, $recommendationLastIndex);
 
             $bestRecommendationId = 0;
             $bestRecommendation = 0;
 
-            foreach ($availableRecommendations as $recommendation) {
+            foreach ($filteredRecommendations as $recommendation) {
                 $difference = $recommendation['like_counts'] - $recommendation['dislike_counts'];
                 if ($difference > $bestRecommendation) {
                     $bestRecommendation = $difference;
@@ -60,8 +62,8 @@ class GivenRecommendationController extends Controller
 
             GivenRecommendation::create([
                 'user_id' => $user_id,
-                'main_question_id' => $activeMainQuestion,
-                'main_choice_id' => $selectedMainChoice,
+                'main_question_id' => $active_main_question,
+                'main_choice_id' => $selected_main_choice,
                 'recommendation_id' => $bestRecommendationId ?: $randomRecommendation
             ]);
         }
@@ -77,9 +79,11 @@ class GivenRecommendationController extends Controller
      * @param  \App\Models\GivenRecommendation  $givenRecommendation
      * @return \Illuminate\Http\Response
      */
-    public function show(GivenRecommendation $givenRecommendation)
+    public function show($id)
     {
-        //
+        $given_recommendations = GivenRecommendation::where('user_id', $id)->where('is_completed', true)->get();
+
+        return $given_recommendations;
     }
 
     /**
@@ -89,9 +93,17 @@ class GivenRecommendationController extends Controller
      * @param  \App\Models\GivenRecommendation  $givenRecommendation
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGivenRecommendationRequest $request, GivenRecommendation $givenRecommendation)
+    public function update(UpdateGivenRecommendationRequest $request, $id)
     {
-        //
+        $given_recommendation = GivenRecommendation::findOrFail($id);
+        $is_liked = $request->input('like');
+        $given_recommendation->update([
+            'like' => $is_liked == true,
+            'dislike' => $is_liked == false,
+            'is_completed' => true
+        ]);
+
+        return new GivenRecommendationResource($given_recommendation);
     }
 
     /**

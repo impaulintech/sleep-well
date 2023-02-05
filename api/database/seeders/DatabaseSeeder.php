@@ -11,6 +11,7 @@ use Database\Seeders\PreQuestionSeeder;
 use Database\Seeders\MainQuestionSeeder;
 use Database\Seeders\RecommendationSeeder;
 use Database\Seeders\GivenRecommendationSeeder;
+use Database\Seeders\NoAvailableRecommendationSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
             MainChoiceSeeder::class,
             RecommendationSeeder::class,
             GivenRecommendationSeeder::class,
+            NoAvailableRecommendationSeeder::class,
         ]);
     }
 }

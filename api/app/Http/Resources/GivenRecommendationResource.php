@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\MainChoice;
 use App\Models\MainQuestion;
+use App\Models\NoAvailableRecommendation;
 use App\Models\Recommendation;
 use Illuminate\Http\Resources\Json\JsonResource;
 
