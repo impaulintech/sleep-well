@@ -33,7 +33,7 @@ class UserController extends Controller
         $user = User::findOrFail($userId);
         $request->validate(['password' => ['sometimes', 'required', 'confirmed']]);
 
-        if($request->current_password || $request->password_confirmation || $request->password){
+        if ($request->current_password || $request->password_confirmation || $request->password) {
             if (!$request->password) {
                 return response()->json(['error' => 'New password is required.'], 400);
             }

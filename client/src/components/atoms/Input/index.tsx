@@ -1,7 +1,7 @@
 import React from "react";
 
 interface IInput {
-  value?: string;
+  value?: string | number;
   name: string;
   label: string;
   type?: string;
