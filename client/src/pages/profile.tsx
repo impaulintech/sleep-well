@@ -88,7 +88,7 @@ const History = () => {
                     isDisabledButtons={true}
                     status={recommendation.status}
                     title={moment(recommendation.updated_at).format(
-                      "MM Do YYYY"
+                      "MMM DD, YYYY"
                     )}
                   >
                     <div className="flex flex-col space-y-4 pb-4">
