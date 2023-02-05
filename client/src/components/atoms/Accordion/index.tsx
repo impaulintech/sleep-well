@@ -27,7 +27,7 @@ const Accordion = ({
               <Disclosure.Button className="flex w-full">
                 <div className="flex items-center space-x-3">
                   <EllipseIcon status={status} />
-                  <div className="text-xl font-bold">{title}</div>
+                  <div className="text-base font-medium">{title}</div>
                 </div>
               </Disclosure.Button>
               <div className="flex space-x-4">

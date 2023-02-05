@@ -2,18 +2,35 @@ import { NextPage } from "next";
 import React, { useState } from "react";
 
 import Radio from "~/components/organisms/Radio";
-import { pre_questions } from "~/shared/json/pre_questions.json";
 import Questionnaire from "~/components/templates/Questionnaire";
+import { useEffect } from "react";
+import Assessment from "~/api/user/Assessment";
 
 const PreQuestions: NextPage = (): JSX.Element => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(0);
+  const [pre_questions, set_pre_questions] = useState<any>([
+    {
+      pre_question: "Loading...",
+      pre_choices: [
+        {
+          id: 1,
+          pre_choice: "...",
+        },
+      ],
+    },
+  ]);
   const totalPage = pre_questions.length;
 
   const [result, setResult] = useState<any[]>([]);
-
   const [value, setValue] = useState({});
-  console.log(result)
+  
+  useEffect(() => {
+    Assessment.preQuestions().then((res) => {
+      set_pre_questions(res?.data?.pre_questions);
+    });
+  }, []);
+  
   const handleOnchange = (event: any) => {
     const newValue = {
       pre_question: pre_questions[currentPage].id,
