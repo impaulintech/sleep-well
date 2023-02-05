@@ -4,6 +4,8 @@ import Image from "next/image";
 import Button from "~/components/atoms/Button";
 import NextHead from "~/components/atoms/NextHead";
 import Loader from "~/components/templates/Loader";
+import UserApi from "~/api/user/UserApi";
+import { toast } from "react-hot-toast";
 
 interface IInfo {
   full_name?: string;
@@ -25,8 +27,14 @@ const Info = ({ result }: IInfoPage) => {
   const [info, setInfo] = useState<IInfo>(initialInfo);
 
   const handleNext = () => {
-    // pass to BE and redirect to fake-loader
-    console.log({ ...result, ...info });
+    const params = { ...result, ...info };
+
+    toast.promise(UserApi.updateUser(params), {
+      loading: "Saving",
+      success: (data) => "Successfully updated!",
+      error: (err) => `${err.response.data.message}`,
+    });
+
     setIsSubmit(true);
     return;
   };
