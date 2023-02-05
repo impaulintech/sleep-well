@@ -1,115 +1,92 @@
+import Link from "next/link";
+import Image from "next/image";
+import { NextPage } from "next";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
+import { setCookie } from "cookies-next";
 
+import AuthApi from "~/api/user/AuthApi";
+import Input from "~/components/atoms/Input";
+import redirect from "~/shared/utils/redirect";
+import Button from "~/components/atoms/Button";
 import NextHead from "~/components/atoms/NextHead";
-import Accordion from "~/components/atoms/Accordion";
-import SettingsIcon from "~/shared/icons/SettingsIcon";
-import FooterNavbar from "~/components/atoms/FooterNavbar";
-import AssessmentCard from "~/components/molecules/AssessmentCard";
-import UserSettingModal from "~/components/molecules/UserSettingsModal";
+import { setBearerToken } from "~/api/instance";
 
-export default function Home() {
-  const [showModal, setShowModal] = useState<boolean>(false);
+const Login: NextPage = (): JSX.Element => {
+  const initialParams = {
+    email: "",
+    password: "",
+  };
 
-  const recommendations = [
-    {
-      id: 1,
-      question: "1Lorem ipsum dolor sit amet.",
-      answer: "yes",
-      recommendation: "Lorem ipsum, dolor sit amet.",
-      like: 3,
-      dislike: 1,
-    },
-    {
-      id: 2,
-      question: "2Lorem ipsum dolor sit amet.",
-      answer: "yes",
-      recommendation: "Lorem ipsum, dolor sit amet.",
-      like: 2,
-      dislike: 1,
-    },
-    {
-      id: 3,
-      question: "3Lorem ipsum dolor sit amet.",
-      answer: "yes",
-      recommendation: "Lorem ipsum, dolor sit amet.",
-      like: 1,
-      dislike: 1,
-    },
-  ];
-  const message =
-    recommendations.length === 0
-      ? "You completed all the recommendations for better sleep habits. "
-      : "Complete all recommendations before taking new assessment for better sleep habits.";
+  const [params, setParams] = useState(initialParams);
 
-  const handleClick = () => {
-    setShowModal(true);
+  const handleChange = (e: any) => {
+    setParams({ ...params, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    toast.promise(
+      AuthApi.login(params).then((res) => {
+        const token = res.data.token;
+        const user = res.data.user;
+        
+        setBearerToken(token);
+        setCookie("token", token);
+        user.full_name ? redirect("/checklist") : redirect("/welcome");
+      }),
+      {
+        loading: "Loading",
+        success: (data) => "Successfully logged in",
+        error: (err) => `${err.response.data.message}`,
+      }
+    );
   };
 
   return (
-    <>
-      <UserSettingModal showModal={showModal} setShowModal={setShowModal} />
-      <div className="flex flex-col min-h-screen space-y-5 pb-32">
-        <div className="flex justify-between items-center">
-          <NextHead title="SleepWell | Recommendation">
-            <button onClick={handleClick}>
-              <SettingsIcon />
-            </button>
-          </NextHead>
+    <div className="flex flex-col h-screen justify-between">
+      <div className="pb-10">
+        <NextHead key="login" title="SleepWell | Login" />
+        <div className="relative flex justify-center">
+          <Image
+            priority
+            src="/images/Login.png"
+            alt="login"
+            width="400"
+            height="400"
+            className="w-[235px] h-[225px]"
+          />
+          <p className="absolute bottom-0 text-3xl font-semibold">
+            Welcome Back!
+          </p>
         </div>
-
-        {/* Top section */}
-        <AssessmentCard recommendations={recommendations} message={message} />
-
-        {/* Recommendation content */}
-        <h1 className="text-xl font-medium border-b-2">
-          Latest recommendations
-        </h1>
-
-        <section className="flex flex-col space-y-2">
-          {recommendations?.length > 0 ? (
-            recommendations.map((recommendation) => {
-              return (
-                <div key={recommendation.id}>
-                  <Accordion status="inProgress" title="In Progress">
-                    <div className="flex flex-col space-y-4 pb-4">
-                      <div className="flex flex-col space-y-2">
-                        <h3 className="text-xl font-medium text-swell-30">
-                          Question:
-                        </h3>
-                        <p className="text-base">{recommendation.question}</p>
-                      </div>
-                      <div className="flex flex-col space-y-2">
-                        <h3 className="text-xl font-medium text-swell-30">
-                          Your Answer:
-                        </h3>
-                        <p className="text-base">
-                          {recommendation.answer.toUpperCase()}
-                        </p>
-                      </div>
-                      <div className="flex flex-col space-y-2">
-                        <h3 className="text-xl font-medium text-swell-30">
-                          Recommendation:
-                        </h3>
-                        <p className="text-base">
-                          {recommendation.recommendation}
-                        </p>
-                      </div>
-                    </div>
-                  </Accordion>
-                </div>
-              );
-            })
-          ) : (
-            <p className="text-failed text-center opacity-60">
-              No available data
-            </p>
-          )}
-        </section>
-        {/* footer */}
-        <FooterNavbar />
+        <div className="py-6">
+          <Input
+            onChange={handleChange}
+            name="email"
+            label="Email address"
+            placeholder="johndoe@gmail.com"
+          ></Input>
+          <Input
+            onChange={handleChange}
+            name="password"
+            label="Password"
+            type="password"
+            placeholder="••••••••••"
+          ></Input>
+          <div className="flex w-full mt-4 justify-center font-medium text-base">
+            <p>Don&#39;t have an account yet?&nbsp;</p>
+            <Link href="/register" className="text-swell-30">
+              Register
+            </Link>
+          </div>
+        </div>
       </div>
-    </>
+      <div className="pb-16">
+        <Button onClick={handleSubmit}>Login</Button>
+      </div>
+    </div>
   );
-}
+};
 
-export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
+// export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
+export default Login;

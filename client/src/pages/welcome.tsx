@@ -37,5 +37,5 @@ const Welcome: NextPage = (): JSX.Element => {
   return <>{pages(activeComponent)}</>;
 };
 
-export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
+// export { UserSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
 export default Welcome;

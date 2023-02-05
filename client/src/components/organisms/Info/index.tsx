@@ -32,7 +32,7 @@ const Info = ({ result }: IInfoPage) => {
   };
 
   return isSubmit ? (
-    <Loader message="Updating your information..." url="/" />
+    <Loader message="Updating your information..." url="/checklist" />
   ) : (
     <div className="flex flex-col h-screen justify-between">
       <div className="pb-10">

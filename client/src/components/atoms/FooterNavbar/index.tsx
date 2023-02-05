@@ -8,12 +8,12 @@ import redirect from "~/shared/utils/redirect";
 import LogoutIcon from "~/shared/icons/LogoutIcons";
 import ClipboardIcon from "~/shared/icons/ClipboardIcon";
 
-const FooterNavbar = () => {
+const FooterNavbar = ({ activePage }: any) => {
   const handleLogout = () => {
     toast.promise(
       AuthApi.logout().then(() => {
         removeCookies("token");
-        redirect("/login");
+        redirect("/");
       }),
       {
         loading: "Loading",
@@ -30,17 +30,17 @@ const FooterNavbar = () => {
       </div>
       <div
         onClick={() => {
-          redirect("/");
+          redirect("/checklist");
         }}
       >
-        <ClipboardIcon />
+        <ClipboardIcon isActive={activePage === 'checklist'} />
       </div>
       <div
         onClick={() => {
           redirect("/profile");
         }}
       >
-        <UserIcon />
+        <UserIcon isActive={activePage === 'profile'} />
       </div>
     </div>
   );
