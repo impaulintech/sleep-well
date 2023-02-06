@@ -13,5 +13,8 @@ const Assessment = {
   getRecommendations: () => {
     return instance.get("/user/assess/given-recommendations");
   },
+  reactRecommendation: (id: any, like: any) => {
+    return instance.put(`/user/assess/given-recommendations/${id}`, like);
+  },
 };
 export default Assessment;
