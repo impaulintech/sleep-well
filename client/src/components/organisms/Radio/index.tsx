@@ -14,7 +14,7 @@ export default function Radio({ options, callback, keyValue }: IRadio) {
     <div className="w-full">
       <RadioGroup value={selected} onChange={setSelected}>
         <div className="space-y-2">
-          {options.map((option: any) => (
+          {options && options?.map((option: any) => (
             <RadioGroup.Option
               key={option.id}
               value={option}

@@ -2,16 +2,16 @@ import { instance } from "../instance";
 
 const Assessment = {
   preQuestions: () => {
-    return instance.get("/user/pre-questions");
+    return instance.get("/user/assess/pre-questions");
   },
   mainQuestions: (data: any) => {
-    return instance.post("/user/main-questions", data);
+    return instance.post("/user/assess/main-questions", data);
   },
   setRecommendations: (data: any) => {
-    return instance.post("/user/given-recommendations", data);
+    return instance.post("/user/assess/given-recommendations", data);
   },
   getRecommendations: () => {
-    return instance.get("/user/given-recommendations");
+    return instance.get("/user/assess/given-recommendations");
   },
 };
 export default Assessment;

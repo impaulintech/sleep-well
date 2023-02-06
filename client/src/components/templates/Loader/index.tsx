@@ -5,7 +5,7 @@ import redirect from "~/shared/utils/redirect";
 import NextHead from "~/components/atoms/NextHead";
 import LoadingIcon from "~/shared/icons/LoadingIcon";
 
-const Loader = ({ message, url }: { url?: string; message?: string }) => {
+const Loader = ({ message, url }: { url: string; message?: string }) => {
   setTimeout(() => {
     redirect(url);
   }, 3000);

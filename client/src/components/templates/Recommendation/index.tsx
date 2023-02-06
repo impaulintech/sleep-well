@@ -13,7 +13,7 @@ interface IRecommendation {
   finalButtonMessage?: string;
   imageHeight?: number;
   imageWidth?: number;
-  loaderUrl?: string;
+  loaderUrl: string;
   loaderMessage?: string;
 }
 

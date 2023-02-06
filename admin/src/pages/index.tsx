@@ -1,7 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/jsx-no-undef */
 import Head from "next/head";
 import { NextPage } from "next";
 import { toast, Toaster } from "react-hot-toast";
 import { setCookie } from "cookies-next";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 import AuthApi from "~/api/admin/AuthApi";
@@ -23,25 +27,23 @@ export default function Home() {
     setParams({ ...params, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = () => { 
     toast.promise(
-      AuthApi.login(params).then((res) => {
-        const token = res.data.token;
-        setBearerToken(token);
-        setCookie("token", token);
-        redirect("/dashboard");
-      }),
+      AuthApi.login(params)
+        .then((res) => {
+          console.log(res);
+          const token = res.data.token;
+          setBearerToken(token);
+          setCookie("token", token);
+          redirect("/dashboard");
+        }) ,
       {
         loading: "Loading",
         success: (data) => `Logged in successfully!`,
-        error: (err) => `${err.response.data.message}`,
+        error: (err) => `${err?.response?.data?.message}`,
       }
     );
   };
-
-  useEffect(() => {
-    console.log(params);
-  }, [params]);
 
   return (
     <div className="flex w-full justify-center">
@@ -51,7 +53,7 @@ export default function Home() {
       <div className="flex flex-col h-screen w-full justify-center sm:w-80 sm:h-full sm:mt-32">
         <div className="space-y-14">
           <div className="flex flex-col items-center space-y-8">
-            <LogoIcon className="w-24 h-24" />
+            <img src="/images/logo.png" className="mr-[20px]"/>
             <h1 className="font-semibold text-4xl">Admin Login</h1>
           </div>
           <div>

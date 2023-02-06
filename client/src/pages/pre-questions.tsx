@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { NextPage } from "next";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -5,13 +6,12 @@ import Assessment from "~/api/user/Assessment";
 import Radio from "~/components/organisms/Radio";
 import { GlobalContext } from "~/context/GlobalContext";
 import Questionnaire from "~/components/templates/Questionnaire";
+import UserApi from "~/api/user/UserApi";
 
 const PreQuestions: NextPage = (): JSX.Element => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(0);
-  const {
-    main: [_, set_main_questions],
-  } = useContext(GlobalContext) as any;
+  const { main: [x, set_main_questions], auth: [y, setAuthUser]} = useContext(GlobalContext) as any;
   const [pre_questions, set_pre_questions] = useState<any>([
     {
       pre_question: "Loading...",
@@ -23,15 +23,18 @@ const PreQuestions: NextPage = (): JSX.Element => {
       ],
     },
   ]);
-  const totalPage = pre_questions.length;
+  const totalPage = pre_questions && pre_questions?.length;
 
   const [result, setResult] = useState<any[]>([]);
   const [value, setValue] = useState({});
 
   useEffect(() => {
-    Assessment.preQuestions().then((res) => {
+    Assessment.preQuestions().then((res) => { 
       set_pre_questions(res?.data?.pre_questions);
     });
+    UserApi.getUser().then((res)=>{
+      setAuthUser(res.data)
+    })
   }, []);
 
   const handleOnchange = (event: any) => {
@@ -68,11 +71,11 @@ const PreQuestions: NextPage = (): JSX.Element => {
         loaderMessage="Generating Personalized Questions"
       >
         <p className="text-xl font-semibold">
-          {currentPage + 1}.&#41; {pre_questions[currentPage]?.pre_question}
+          {currentPage + 1}.&#41; {pre_questions && pre_questions[currentPage]?.pre_question}
         </p>
         <Radio
           callback={handleOnchange}
-          options={pre_questions[currentPage]?.pre_choices}
+          options={pre_questions && pre_questions[currentPage]?.pre_choices}
           keyValue="pre_choice"
         />
       </Questionnaire>
