@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Disclosure } from "@headlessui/react";
 
 import ThumbUpIcon from "~/shared/icons/ThumbUpIcon";
 import ThumbDownIcon from "~/shared/icons/ThumbDownIcon";
 import EllipseIcon from "~/shared/icons/EllipseIcon";
+import Assessment from "~/api/user/Assessment";
+import { GlobalContext } from "~/context/GlobalContext";
+import toast from "react-hot-toast";
 
 interface IAccordion {
   title: string;
   children: React.ReactNode;
   status?: string;
   isDisabledButtons?: boolean;
+  data: any;
 }
 
 const Accordion = ({
@@ -17,7 +21,13 @@ const Accordion = ({
   children,
   status,
   isDisabledButtons = false,
+  data,
 }: IAccordion) => {
+  const { like, dislike, id } = data || {};
+  
+  const { latestRecomm } = useContext(GlobalContext) as any;
+  const [_, setLatestRecommendations] = latestRecomm; 
+  
   return (
     <div className=" ">
       <Disclosure>
@@ -26,7 +36,7 @@ const Accordion = ({
             <div className="flex w-full justify-between items-center space-x-4 p-4 bg-swell-dark text-white shadow-md">
               <Disclosure.Button className="flex w-full">
                 <div className="flex items-center space-x-3">
-                  <EllipseIcon status={status} />
+                  <EllipseIcon status={like && 'liked' || dislike && 'disliked' || 'inProgress'} />
                   <div className="text-base font-medium">{title}</div>
                 </div>
               </Disclosure.Button>
@@ -34,18 +44,28 @@ const Accordion = ({
                 <button
                   disabled={isDisabledButtons}
                   onClick={() => {
-                    console.log("Disliked!");
+                    Assessment.reactRecommendation(id, {like: false}).then(()=>{
+                      Assessment.getRecommendations().then((res) => {
+                        setLatestRecommendations(res?.data);
+                        toast.success('You dislike this recommendation!')
+                      });
+                    })
                   }}
                 >
-                  <ThumbDownIcon isActive={status == "disliked"} />
+                  <ThumbDownIcon isActive={dislike} />
                 </button>
                 <button
                   disabled={isDisabledButtons}
                   onClick={() => {
-                    console.log("Liked!");
+                    Assessment.reactRecommendation(id, {like: true}).then(()=>{
+                      Assessment.getRecommendations().then((res) => {
+                        setLatestRecommendations(res?.data);
+                        toast.success('You like this recommendation!')
+                      });
+                    })
                   }}
                 >
-                  <ThumbUpIcon isActive={status == "liked"} />
+                  <ThumbUpIcon isActive={like} />
                 </button>
               </div>
             </div>

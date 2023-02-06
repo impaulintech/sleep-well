@@ -61,7 +61,7 @@ export default function Home() {
             recommendations.map((recommendation: any, index: number) => {
               return (
                 <div key={index}>
-                  <Accordion status="inProgress" title="In Progress">
+                  <Accordion status="inProgress" title="In Progress" data={recommendation}>
                     <div className="flex flex-col space-y-4 pb-4">
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">

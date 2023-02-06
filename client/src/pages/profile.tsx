@@ -14,23 +14,25 @@ import Assessment from "~/api/user/Assessment";
 const History = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { completedRecomm, auth } = useContext(GlobalContext) as any;
-  const [completedRecommendations, setCompletedRecommendations] = completedRecomm;
-  const [authUser, setAuthUser] = auth; 
-  const recommendations = completedRecommendations?.completed
+  const [completedRecommendations, setCompletedRecommendations] =
+    completedRecomm;
+  const [authUser, setAuthUser] = auth;
+  const recommendations =
+    completedRecommendations && completedRecommendations?.completed;
 
   const handleClick = () => {
     setShowModal(true);
   };
-  
-  useEffect(()=>{
-    Assessment.getRecommendations().then((res) => {  
+
+  useEffect(() => {
+    Assessment.getRecommendations().then((res) => {
       setCompletedRecommendations(res?.data);
     });
-    UserApi.getUser().then((res)=>{
-      setAuthUser(res.data)
-    })
-  },[])
-  // dummy profile
+    UserApi.getUser().then((res) => {
+      setAuthUser(res.data);
+    });
+  }, []);
+  
   const profile = {
     full_name: authUser?.full_name || "Loading...",
     created_at: authUser?.created_at || "20220909",
@@ -72,6 +74,7 @@ const History = () => {
                   <Accordion
                     isDisabledButtons={true}
                     status={recommendation.status}
+                    data={recommendation}
                     title={moment(recommendation.updated_at).format(
                       "MMM DD, YYYY"
                     )}
@@ -81,14 +84,16 @@ const History = () => {
                         <h3 className="text-xl font-medium text-swell-30">
                           Question:
                         </h3>
-                        <p className="text-base">{recommendation.question}</p>
+                        <p className="text-base">
+                          {recommendation.main_question}
+                        </p>
                       </div>
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">
                           Your Answer:
                         </h3>
                         <p className="text-base">
-                          {recommendation.answer?.toUpperCase()}
+                          {recommendation?.main_choice?.toUpperCase()}
                         </p>
                       </div>
                       <div className="flex flex-col space-y-2">
@@ -96,7 +101,7 @@ const History = () => {
                           Recommendation:
                         </h3>
                         <p className="text-base">
-                          {recommendation.recommendation}
+                          {recommendation?.recommendation}
                         </p>
                       </div>
                     </div>
@@ -111,7 +116,7 @@ const History = () => {
           )}
         </section>
         {/* footer */}
-        <FooterNavbar activePage="profile"/>
+        <FooterNavbar activePage="profile" />
       </div>
     </>
   );
