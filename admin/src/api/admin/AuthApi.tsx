@@ -6,8 +6,7 @@ export interface ILoginParams {
 }
 
 const AuthApi = {
-  login: (params: any) => { 
-    console.log(params);
+  login: (params: any) => {  
     return instance.post("/login", params);
   },
 

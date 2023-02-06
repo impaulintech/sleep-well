@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('pre_questions', function (Blueprint $table) {
             $table->id();
-            $table->string('pre_question');
+            $table->text('pre_question');
             $table->timestamps();
         });
     }

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
-import EditIcon from "~/shared/icons/EditIcon";
-import PeopleIcon from "~/shared/icons/PeopleIcon";
+import EditIcon from "~/shared/icons/EditIcon"; 
 import Accordion from "~/components/atoms/Accordion";
 import EllipseIcon from "~/shared/icons/EllipseIcon";
 import MainQuestionAccordionGroup from "../MainQuestionAccordionGroup";
+import PreQuestionModal from "~/components/molecules/PreQuestionModal";
+import ConfirmationModal from "~/components/molecules/ConfirmationModal";
 
 interface IPreChoiceAccordionGroup {
   item: any;
@@ -17,54 +18,80 @@ const PreChoiceAccordionGroup = ({
   title,
   type,
 }: IPreChoiceAccordionGroup) => {
+  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [method, setMethod] = useState("CREATE");
   const handleAdd = () => {
-    console.log("Added!");
+    setMethod("CREATE");
+    setShowModal(true);
   };
   const handleEdit = () => {
-    console.log("Edit!");
+    setMethod("UPDATE");
+    setShowModal(true);
   };
-  const handleDelete = () => {
-    console.log("Deleted!");
+  const handleDelete = () => { 
+    setShowDeleteModal(true);
   };
 
   return (
-    <Accordion
-      hasAdd={true}
-      hasDelete={true}
-      handleAdd={handleAdd}
-      handleDelete={handleDelete}
-      type={type}
-      title={`${item.id}.) ${title}`}
-    >
-      <div className="flex w-full justify-between items-center p-4 space-x-4">
-        <div className="flex items-center space-x-4">
-          <EllipseIcon type={type} />
-          <div>{item.pre_choice}</div>
-        </div>
-        <div className="flex space-x-6">
-          <div className="flex space-x-2">
+    <>
+      <ConfirmationModal
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
+        id={item?.id}
+        item="pre_choice"
+      />
+      <PreQuestionModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        title={
+          method === "CREATE" ? "Add new Main Question" : "Update Pre Choice"
+        }
+        data={
+          method === "CREATE"
+            ? { type: "main_question", id: item?.id, parent: "pre_choice_id" }
+            : { type: "pre_choice", id: item?.id }
+        }
+        method={method}
+      />
+      <Accordion
+        hasAdd={true}
+        hasDelete={true}
+        handleAdd={handleAdd}
+        handleDelete={handleDelete}
+        type={type}
+        title={`${item.id}.) ${title}`}
+      >
+        <div className="flex w-full justify-between items-center p-4 space-x-4">
+          <div className="flex items-center space-x-4">
+            <EllipseIcon type={type} />
+            <div>{item.pre_choice}</div>
+          </div>
+          <div className="flex space-x-6">
+            {/* <div className="flex space-x-2">
             <p>60</p>
             <PeopleIcon />
+          </div> */}
+            <button onClick={handleEdit}>
+              <EditIcon />
+            </button>
           </div>
-          <button onClick={handleEdit}>
-            <EditIcon />
-          </button>
         </div>
-      </div>
-      <div className="space-y-1">
-        {item.main_questions.map((main_question: any) => {
-          return (
-            <div key={main_question.id}>
-              <MainQuestionAccordionGroup
-                item={main_question}
-                title="Main Question"
-                type="mainQuestion"
-              />
-            </div>
-          );
-        })}
-      </div>
-    </Accordion>
+        <div className="space-y-1">
+          {item.main_questions?.map((main_question: any) => {
+            return (
+              <div key={main_question.id}>
+                <MainQuestionAccordionGroup
+                  item={main_question}
+                  title="Main Question"
+                  type="mainQuestion"
+                />
+              </div>
+            );
+          })}
+        </div>
+      </Accordion>
+    </>
   );
 };
 

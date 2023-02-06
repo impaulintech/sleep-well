@@ -8,7 +8,7 @@ import LoadingIcon from "~/shared/icons/LoadingIcon";
 const Loader = ({ message, url }: { url: string; message?: string }) => {
   setTimeout(() => {
     redirect(url);
-  }, 3000);
+  }, 1500);
 
   return (
     <>

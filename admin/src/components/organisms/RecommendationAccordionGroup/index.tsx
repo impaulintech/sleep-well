@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 
 import EditIcon from "~/shared/icons/EditIcon";
 import EllipseIcon from "~/shared/icons/EllipseIcon";
@@ -6,6 +6,9 @@ import Accordion from "~/components/atoms/Accordion";
 import TrashIcon from "~/shared/icons/TrashIcon";
 import ThumbUpIcon from "~/shared/icons/ThumbUpIcon";
 import ThumbDownIcon from "~/shared/icons/ThumbDownIcon";
+import PreQuestionModal from "~/components/molecules/PreQuestionModal";
+import { GlobalContext } from "~/context/GlobalContext";
+import ConfirmationModal from "~/components/molecules/ConfirmationModal";
 
 interface IRecommendationsGroup {
   list: any;
@@ -14,20 +17,45 @@ interface IRecommendationsGroup {
 }
 
 const RecommendationsGroup = ({ list, title, type }: IRecommendationsGroup) => {
+  const { assessment, dataCount } = useContext(GlobalContext) as any;
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [pre_questions, set_pre_questions] = assessment;
+  const [_, setData] = dataCount;
+  const [showModal, setShowModal] = useState(false);
+  const [selectedID, setSelectedID] = useState(0);
+  const [method, setMethod] = useState("UPDATE");
+
   const handleAdd = () => {
     console.log("Added!");
   };
-  const handleEdit = () => {
-    console.log("Edit!");
+  const handleEdit = (id: any) => {
+    setMethod("UPDATE");
+    setSelectedID(id);
+    setShowModal(true);
   };
-  const handleDelete = () => {
-    console.log("Deleted!");
+  const handleDelete = (id: any) => {
+    setSelectedID(id);
+    setShowDeleteModal(true);
   };
 
   return (
     <>
+      <ConfirmationModal
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
+        id={selectedID}
+        item="recommendation"
+      />
+      <PreQuestionModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        title={"Update recommendation"}
+        data={{ type: "recommendation", id: selectedID }}
+        method={method}
+      />
+      ;
       <Accordion
-        hasAdd={true}
+        hasAdd={false}
         handleAdd={handleAdd}
         type={type}
         title={`${title}`}
@@ -49,10 +77,18 @@ const RecommendationsGroup = ({ list, title, type }: IRecommendationsGroup) => {
                     <p>60</p>
                     <ThumbUpIcon />
                   </div>
-                  <button onClick={handleDelete}>
+                  <button
+                    onClick={() => {
+                      handleDelete(item?.id);
+                    }}
+                  >
                     <TrashIcon />
                   </button>
-                  <button onClick={handleEdit}>
+                  <button
+                    onClick={() => {
+                      handleEdit(item?.id);
+                    }}
+                  >
                     <EditIcon />
                   </button>
                 </div>

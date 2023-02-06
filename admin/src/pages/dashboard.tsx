@@ -1,743 +1,41 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Button from "~/components/atoms/Button";
 import Layout from "~/layout/Layout";
 import PreQuestionModal from "~/components/molecules/PreQuestionModal";
 import AccordionGroups from "~/components/templates/AccordionGroups";
+import UserApi from "~/api/admin/UserApi";
+import { GlobalContext } from "~/context/GlobalContext";
+import ConfirmationModal from "~/components/molecules/ConfirmationModal";
 
 const Dashboard = () => {
-  const pre_questions = [
-    {
-      id: 1,
-      pre_question: "Lorem ipsum this is question1",
-      pre_choices: [
-        {
-          id: 1,
-          pre_choice: "yes",
-          main_questions: [
-            {
-              id: 1,
-              main_question: "MainQuestion1",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 2,
-              main_question: "MainQuestion2",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 3,
-              main_question: "MainQuestion3",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 2,
-          pre_choice: "no",
-          main_questions: [
-            {
-              id: 1,
-              main_question: "MainQuestion1",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 2,
-              main_question: "MainQuestion2",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 3,
-              main_question: "MainQuestion3",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 3,
-          pre_choice: "sometimes",
-          main_questions: [
-            {
-              id: 1,
-              main_question: "MainQuestion1",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 2,
-              main_question: "MainQuestion2",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 3,
-              main_question: "MainQuestion3",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 2,
-      pre_question: "Lorem ipsum this is question2",
-      pre_choices: [
-        {
-          id: 1,
-          pre_choice: "yes",
-          main_questions: [
-            {
-              id: 1,
-              main_question: "MainQuestion1",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 2,
-              main_question: "MainQuestion2",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 3,
-              main_question: "MainQuestion3",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 2,
-          pre_choice: "no",
-          main_questions: [
-            {
-              id: 1,
-              main_question: "MainQuestion1",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 2,
-              main_question: "MainQuestion2",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 3,
-              main_question: "MainQuestion3",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 3,
-          pre_choice: "sometimes",
-          main_questions: [
-            {
-              id: 1,
-              main_question: "MainQuestion1",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 2,
-              main_question: "MainQuestion2",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 3,
-              main_question: "MainQuestion3",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice1",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice2",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 3,
-      pre_question: "Lorem ipsum this is question3",
-      pre_choices: [
-        {
-          id: 1,
-          pre_choice: "yes",
-          main_questions: [
-            {
-              id: 1,
-              main_question: "MainQuestion1",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 2,
-              main_question: "MainQuestion2",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 3,
-              main_question: "MainQuestion3",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 2,
-          pre_choice: "no",
-          main_questions: [
-            {
-              id: 1,
-              main_question: "MainQuestion1",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 2,
-              main_question: "MainQuestion2",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 3,
-              main_question: "MainQuestion3",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 3,
-          pre_choice: "sometimes",
-          main_questions: [
-            {
-              id: 1,
-              main_question: "MainQuestion1",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 2,
-              main_question: "MainQuestion2",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 3,
-              main_question: "MainQuestion3",
-              main_choices: [
-                {
-                  id: 1,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-                {
-                  id: 2,
-                  main_choice: "MainChoice",
-                  recommendations: [
-                    { id: 1, recommendation: "This is my recommendation1" },
-                    { id: 2, recommendation: "This is my recommendation2" },
-                    { id: 3, recommendation: "This is my recommendation3" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const { assessment, dataCount } = useContext(GlobalContext) as any;
+  const [pre_questions, set_pre_questions] = assessment;
+  const [data, setData] = dataCount;
   const [showModal, setShowModal] = useState(false);
 
-  const onClick = () => {
+  const onClick = () => { 
     setShowModal(true);
   };
+
+  useEffect(() => {
+    UserApi.getAssessment().then((res) => {
+      set_pre_questions(res?.data?.assessment);
+      setData(res?.data?.data);
+    });
+  }, []);
+
   return (
     <>
-      <PreQuestionModal showModal={showModal} setShowModal={setShowModal} />
+      <PreQuestionModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        title="Add new Pre Question"
+        data={{ type: "pre_question" }}
+        method="CREATE"
+      />
       <Layout>
         <div className="flex flex-col space-y-8 h-full pt-32 max-w-[1056px] flex-1">
           <Head>
@@ -746,19 +44,27 @@ const Dashboard = () => {
           <div className="h-fit w-full flex flex-col space-y-2 sm:grid sm:gap-4 sm:grid-cols-2 sm:space-y-0">
             <div className="flex justify-between rounded-lg shadow-sm p-6 bg-swell-card">
               <div className="text-xl font-medium">Total Pre Questions</div>
-              <div className="text-2xl font-bold">2</div>
+              <div className="text-2xl font-bold">
+                {data?.total_pre_questions}
+              </div>
             </div>
             <div className="flex justify-between rounded-lg shadow-sm p-6 bg-swell-card">
-              <div className="text-xl font-medium">Total Pre Questions</div>
-              <div className="text-2xl font-bold">2</div>
+              <div className="text-xl font-medium">Total Pre Choices</div>
+              <div className="text-2xl font-bold">
+                {data?.total_pre_choices}
+              </div>
             </div>
             <div className="flex justify-between rounded-lg shadow-sm p-6 bg-swell-card">
-              <div className="text-xl font-medium">Total Pre Questions</div>
-              <div className="text-2xl font-bold">2</div>
+              <div className="text-xl font-medium">Total Main Questions</div>
+              <div className="text-2xl font-bold">
+                {data?.total_main_questions}
+              </div>
             </div>
             <div className="flex justify-between rounded-lg shadow-sm p-6 bg-swell-card">
-              <div className="text-xl font-medium">Total Pre Questions</div>
-              <div className="text-2xl font-bold">2</div>
+              <div className="text-xl font-medium">Total Recommendations</div>
+              <div className="text-2xl font-bold">
+                {data?.total_recommendations}
+              </div>
             </div>
           </div>
           <div className="flex ml-auto">
@@ -771,7 +77,16 @@ const Dashboard = () => {
           </div>
 
           {/* PreQuestions Nested Accordions */}
-          <AccordionGroups pre_questions={pre_questions} />
+          <AccordionGroups
+            pre_questions={pre_questions}
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
+          {pre_questions?.length === 0 && (
+            <div className="w-full text-center">
+              <h1 className="text-lg text-failed">No available data.</h1>
+            </div>
+          )}
         </div>
       </Layout>
     </>

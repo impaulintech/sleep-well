@@ -21,12 +21,12 @@ class GivenRecommendationController extends Controller
     {
         $user_id = Auth::id();
         $given_recommendations = GivenRecommendationResource::collection(GivenRecommendation::where('user_id', $user_id)->get());
-        $latest_recommendations = $given_recommendations->where('is_completed', false);
-        $completed_recommendations = $given_recommendations->where('is_completed', true);
+        $latest_recommendations = $given_recommendations->where('is_completed', false)->sortByDesc('updated_at');
+        $completed_recommendations = $given_recommendations->where('is_completed', true)->sortByDesc('updated_at');
 
         return response()->json([
             "latest" => array_values($latest_recommendations->toArray()),
-            "completed" => $completed_recommendations
+            "completed" => array_values($completed_recommendations->toArray())
         ]);
     }
 

@@ -24,4 +24,14 @@ class MainChoice extends Model
     {
         return $this->belongsTo(MainQuestion::class);
     }
+
+    public function getUsersCountAttribute()
+    {
+        return $this->mainQuestion
+            ->preChoice
+            ->preQuestion
+            ->givenRecommendations
+            ->where('main_choice_id', $this->id)
+            ->count();
+    }
 }
