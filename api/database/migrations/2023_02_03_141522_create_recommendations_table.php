@@ -19,7 +19,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->string('recommendation');
+            $table->text('recommendation');
             $table->integer('like_counts')->default(0);
             $table->integer('dislike_counts')->default(0);
             $table->timestamps();

@@ -19,7 +19,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->string('pre_choice');
+            $table->text('pre_choice');
             $table->timestamps();
         });
     }

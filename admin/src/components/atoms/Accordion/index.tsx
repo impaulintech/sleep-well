@@ -13,7 +13,7 @@ interface IAccordion {
   hasAdd?: boolean;
   hasDelete?: boolean;
   handleAdd?: any;
-  handleDelete?: any;
+  handleDelete?: any; 
 }
 
 const Accordion = ({
@@ -23,7 +23,7 @@ const Accordion = ({
   hasAdd = false,
   hasDelete = false,
   handleAdd,
-  handleDelete,
+  handleDelete, 
 }: IAccordion) => {
   return (
     <Disclosure>
@@ -38,12 +38,12 @@ const Accordion = ({
             </Disclosure.Button>
             <div className="flex items-center space-x-4">
               {hasAdd && (
-                <div onClick={handleAdd}>
+                <div onClick={handleAdd} className="cursor-pointer">
                   <EllipsePlusIcon type={type} />
                 </div>
               )}
               {hasDelete && (
-                <div onClick={handleDelete}>
+                <div onClick={handleDelete} className="cursor-pointer">
                   <TrashIcon />
                 </div>
               )}

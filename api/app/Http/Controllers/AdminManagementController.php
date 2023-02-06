@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PreChoice;
+use App\Models\MainChoice;
 use App\Models\PreQuestion;
+use App\Models\MainQuestion;
 use Illuminate\Http\Request;
+use App\Models\Recommendation;
 use App\Http\Resources\PreQuestionResource;
+use App\Models\GivenRecommendation;
 
 class AdminManagementController extends Controller
 {
@@ -15,8 +20,17 @@ class AdminManagementController extends Controller
      */
     public function index()
     {
-        $preQuestions = PreQuestion::with(['preChoices.mainQuestions.mainChoices.recommendations'])->get();
-        return response()->json($preQuestions);
+        $pre_questions = PreQuestion::with(['preChoices.mainQuestions.mainChoices.recommendations'])->get();
+
+        return response()->json([
+            "assessment" => $pre_questions,
+            "data" => [
+                "total_pre_questions" => count(PreQuestion::get()),
+                "total_pre_choices" => count(PreChoice::get()),
+                "total_main_questions" => count(MainQuestion::get()),
+                "total_recommendations" => count(Recommendation::get()),
+            ],
+        ], 200);
     }
 
     /**
