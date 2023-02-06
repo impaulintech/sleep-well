@@ -30,8 +30,7 @@ export default function Home() {
   const handleSubmit = () => { 
     toast.promise(
       AuthApi.login(params)
-        .then((res) => {
-          console.log(res);
+        .then((res) => { 
           const token = res.data.token;
           setBearerToken(token);
           setCookie("token", token);

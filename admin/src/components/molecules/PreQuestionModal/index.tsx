@@ -15,6 +15,7 @@ interface IPreQuestionModal {
   data?: any;
   success?: string;
   method: string;
+  defaultValue?: any;
 }
 
 const PreQuestionModal = ({
@@ -23,6 +24,7 @@ const PreQuestionModal = ({
   title,
   data,
   method,
+  defaultValue,
   success = "Record has been added in the Database",
 }: IPreQuestionModal) => {
   const { assessment, dataCount } = useContext(GlobalContext) as any;
@@ -42,7 +44,7 @@ const PreQuestionModal = ({
     setParams({ ...params, [e.target.name]: e.target.value, [parent]: id });
   };
 
-  const handleSubmit = () => { 
+  const handleSubmit = () => {
     setShowModal(false);
     switch (method) {
       case "CREATE":
@@ -58,13 +60,15 @@ const PreQuestionModal = ({
                 setShowModal(false);
               })
               .catch((err) => {
-                const message =
-                  err && Object.entries(err?.response?.data?.errors);
+                const message = err?.response?.data?.errors
+                  ? Object.entries(err?.response?.data?.errors)
+                  : err?.response?.data?.message;
 
-                message &&
-                  message?.map((error: any) => {
-                    toast.error(error[1]);
-                  });
+                err?.response?.data?.errors
+                  ? message?.map((error: any) => {
+                      toast.error(error[1]);
+                    })
+                  : toast.error(message);
               });
             break;
           case "pre_choice":
@@ -78,13 +82,15 @@ const PreQuestionModal = ({
                 setShowModal(false);
               })
               .catch((err) => {
-                const message =
-                  err && Object.entries(err?.response?.data?.errors);
+                const message = err?.response?.data?.errors
+                  ? Object.entries(err?.response?.data?.errors)
+                  : err?.response?.data?.message;
 
-                message &&
-                  message?.map((error: any) => {
-                    toast.error(error[1]);
-                  });
+                err?.response?.data?.errors
+                  ? message?.map((error: any) => {
+                      toast.error(error[1]);
+                    })
+                  : toast.error(message);
               });
             break;
           case "main_question":
@@ -98,13 +104,15 @@ const PreQuestionModal = ({
                 setShowModal(false);
               })
               .catch((err) => {
-                const message =
-                  err && Object.entries(err?.response?.data?.errors);
+                const message = err?.response?.data?.errors
+                  ? Object.entries(err?.response?.data?.errors)
+                  : err?.response?.data?.message;
 
-                message &&
-                  message?.map((error: any) => {
-                    toast.error(error[1]);
-                  });
+                err?.response?.data?.errors
+                  ? message?.map((error: any) => {
+                      toast.error(error[1]);
+                    })
+                  : toast.error(message);
               });
             break;
           case "main_choice":
@@ -118,13 +126,15 @@ const PreQuestionModal = ({
                 setShowModal(false);
               })
               .catch((err) => {
-                const message =
-                  err && Object.entries(err?.response?.data?.errors);
+                const message = err?.response?.data?.errors
+                  ? Object.entries(err?.response?.data?.errors)
+                  : err?.response?.data?.message;
 
-                message &&
-                  message?.map((error: any) => {
-                    toast.error(error[1]);
-                  });
+                err?.response?.data?.errors
+                  ? message?.map((error: any) => {
+                      toast.error(error[1]);
+                    })
+                  : toast.error(message);
               });
             break;
           case "recommendation":
@@ -138,13 +148,15 @@ const PreQuestionModal = ({
                 setShowModal(false);
               })
               .catch((err) => {
-                const message =
-                  err && Object.entries(err?.response?.data?.errors);
+                const message = err?.response?.data?.errors
+                  ? Object.entries(err?.response?.data?.errors)
+                  : err?.response?.data?.message;
 
-                message &&
-                  message?.map((error: any) => {
-                    toast.error(error[1]);
-                  });
+                err?.response?.data?.errors
+                  ? message?.map((error: any) => {
+                      toast.error(error[1]);
+                    })
+                  : toast.error(message);
               });
             break;
           default:
@@ -246,6 +258,7 @@ const PreQuestionModal = ({
             </div>
             <div className="flex flex-col w-full p-4 space-y-5">
               <textarea
+                defaultValue={method === "UPDATE" ? defaultValue : ""}
                 name={type}
                 id={type}
                 cols={30}

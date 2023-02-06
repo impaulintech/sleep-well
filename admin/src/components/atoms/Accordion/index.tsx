@@ -13,7 +13,7 @@ interface IAccordion {
   hasAdd?: boolean;
   hasDelete?: boolean;
   handleAdd?: any;
-  handleDelete?: any;
+  handleDelete?: any; 
 }
 
 const Accordion = ({
@@ -23,7 +23,7 @@ const Accordion = ({
   hasAdd = false,
   hasDelete = false,
   handleAdd,
-  handleDelete,
+  handleDelete, 
 }: IAccordion) => {
   return (
     <Disclosure>

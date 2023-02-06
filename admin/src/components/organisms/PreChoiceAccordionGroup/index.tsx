@@ -11,12 +11,14 @@ interface IPreChoiceAccordionGroup {
   item: any;
   title: string;
   type: string;
+  number: number
 }
 
 const PreChoiceAccordionGroup = ({
   item,
   title,
   type,
+  number
 }: IPreChoiceAccordionGroup) => {
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -42,6 +44,7 @@ const PreChoiceAccordionGroup = ({
         item="pre_choice"
       />
       <PreQuestionModal
+        defaultValue={item.pre_choice}
         showModal={showModal}
         setShowModal={setShowModal}
         title={
@@ -60,7 +63,7 @@ const PreChoiceAccordionGroup = ({
         handleAdd={handleAdd}
         handleDelete={handleDelete}
         type={type}
-        title={`${item.id}.) ${title}`}
+        title={`${number + 1}.) ${title}`}
       >
         <div className="flex w-full justify-between items-center p-4 space-x-4">
           <div className="flex items-center space-x-4">
@@ -78,11 +81,12 @@ const PreChoiceAccordionGroup = ({
           </div>
         </div>
         <div className="space-y-1">
-          {item.main_questions?.map((main_question: any) => {
+          {item.main_questions?.map((main_question: any, number: number) => {
             return (
               <div key={main_question.id}>
                 <MainQuestionAccordionGroup
                   item={main_question}
+                  number={number}
                   title="Main Question"
                   type="mainQuestion"
                 />
