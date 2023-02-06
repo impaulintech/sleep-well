@@ -4,16 +4,20 @@ interface IButton {
   children: any;
   onClick: any;
   className?: string;
+  bg?: string; 
 }
 
-const Button = (props: IButton) => {
-  const { onClick, className, children } = props;
-
+const Button = ({
+  onClick,
+  className,
+  children,
+  bg = "bg-swell-30", 
+}: any) => {
   return (
     <>
-      <button
+      <button 
         onClick={onClick}
-        className={`flex w-full p-2 rounded bg-swell-30 text-white justify-center border border-dark ${className}`}
+        className={`flex w-full p-2 rounded ${bg} text-white justify-center border border-dark ${className}`}
       >
         {children}
       </button>

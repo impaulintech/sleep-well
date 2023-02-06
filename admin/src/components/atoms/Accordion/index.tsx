@@ -38,12 +38,12 @@ const Accordion = ({
             </Disclosure.Button>
             <div className="flex items-center space-x-4">
               {hasAdd && (
-                <div onClick={handleAdd}>
+                <div onClick={handleAdd} className="cursor-pointer">
                   <EllipsePlusIcon type={type} />
                 </div>
               )}
               {hasDelete && (
-                <div onClick={handleDelete}>
+                <div onClick={handleDelete} className="cursor-pointer">
                   <TrashIcon />
                 </div>
               )}
