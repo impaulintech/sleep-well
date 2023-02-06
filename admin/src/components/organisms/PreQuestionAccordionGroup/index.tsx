@@ -11,12 +11,14 @@ interface PreQuestionAccordionGroup {
   item: any;
   title: string;
   type: string;
+  number: number
 }
 
 const PreQuestionAccordion = ({
   item,
   title,
   type,
+  number
 }: PreQuestionAccordionGroup) => {
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -44,6 +46,7 @@ const PreQuestionAccordion = ({
       <PreQuestionModal
         showModal={showModal}
         setShowModal={setShowModal}
+        defaultValue={item.pre_question}
         title={
           method === "CREATE" ? "Add new Pre Choice" : "Update Pre Question"
         }
@@ -60,7 +63,7 @@ const PreQuestionAccordion = ({
         handleAdd={handleAdd}
         handleDelete={handleDelete}
         type={type}
-        title={`${item.id}.) ${title}`}
+        title={`${number+1}.) ${title}`}
       >
         <div className="flex w-full justify-between items-center p-4 space-x-4">
           <div className="flex items-center space-x-4">
@@ -72,11 +75,12 @@ const PreQuestionAccordion = ({
           </button>
         </div>
         <div className="space-y-1">
-          {item?.pre_choices?.map((pre_choice: any) => {
+          {item?.pre_choices?.map((pre_choice: any, number: number) => {
             return (
               <div key={pre_choice.id}>
                 <PreChoiceAccordionGroup
                   item={pre_choice}
+                  number={number}
                   title="Pre Choice"
                   type="preChoice"
                 />

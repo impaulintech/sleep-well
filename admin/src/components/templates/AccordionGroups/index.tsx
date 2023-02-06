@@ -6,11 +6,12 @@ import PreQuestionAccordion from "~/components/organisms/PreQuestionAccordionGro
 const AccordionGroups = ({ pre_questions, showModal, setShowModal }: any) => {
   return (
     <div className="flex flex-col space-y-2">
-      {pre_questions.map((pre_question: any, id: number) => {
+      {pre_questions.map((pre_question: any, number: number) => {
         return (
-          <div key={id}>
+          <div key={number}>
             <PreQuestionAccordion
               item={pre_question}
+              number={number}
               title="Pre Question"
               type="preQuestion"
             />

@@ -11,12 +11,14 @@ interface IMainQuestionAccordionGroup {
   item: any;
   title: string;
   type: string;
+  number: number
 }
 
 const MainQuestionAccordionGroup = ({
   item,
   title,
   type,
+  number
 }: IMainQuestionAccordionGroup) => {
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -41,6 +43,7 @@ const MainQuestionAccordionGroup = ({
         item="main_question"
       />
       <PreQuestionModal
+        defaultValue={item.main_question}
         showModal={showModal}
         setShowModal={setShowModal}
         title={
@@ -59,7 +62,7 @@ const MainQuestionAccordionGroup = ({
         handleAdd={handleAdd}
         handleDelete={handleDelete}
         type={type}
-        title={`${item.id}.) ${title}`}
+        title={`${number + 1}.) ${title}`}
       >
         <div className="flex w-full justify-between items-center p-4 space-x-4">
           <div className="flex items-center space-x-4">
@@ -78,11 +81,12 @@ const MainQuestionAccordionGroup = ({
         </div>
 
         <div className="space-y-1">
-          {item.main_choices.map((main_choice: any) => {
+          {item.main_choices.map((main_choice: any, number:number) => {
             return (
               <div key={main_choice.id}>
                 <MainChoiceAccordionGroup
                   item={main_choice}
+                  number={number}
                   title="Main Choice"
                   type="mainChoice"
                 />

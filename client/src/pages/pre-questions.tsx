@@ -6,7 +6,8 @@ import Assessment from "~/api/user/Assessment";
 import Radio from "~/components/organisms/Radio";
 import { GlobalContext } from "~/context/GlobalContext";
 import Questionnaire from "~/components/templates/Questionnaire";
-import UserApi from "~/api/user/UserApi";
+import UserApi from "~/api/user/UserApi"; 
+import redirect from "~/shared/utils/redirect";
 
 const PreQuestions: NextPage = (): JSX.Element => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
@@ -30,6 +31,9 @@ const PreQuestions: NextPage = (): JSX.Element => {
 
   useEffect(() => {
     Assessment.preQuestions().then((res) => { 
+      if(res?.data?.pre_questions?.length === 0){
+        return redirect("/checklist")
+      }
       set_pre_questions(res?.data?.pre_questions);
     });
     UserApi.getUser().then((res)=>{

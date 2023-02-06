@@ -22,19 +22,22 @@ const RecommendationsGroup = ({ list, title, type }: IRecommendationsGroup) => {
   const [pre_questions, set_pre_questions] = assessment;
   const [_, setData] = dataCount;
   const [showModal, setShowModal] = useState(false);
+  const [defaultValue, setDefaultValue] = useState("");
   const [selectedID, setSelectedID] = useState(0);
   const [method, setMethod] = useState("UPDATE");
 
   const handleAdd = () => {
     console.log("Added!");
   };
-  const handleEdit = (id: any) => {
+  const handleEdit = (id: any, defVal: string) => {
     setMethod("UPDATE");
+    setDefaultValue(defVal);
     setSelectedID(id);
     setShowModal(true);
   };
-  const handleDelete = (id: any) => {
+  const handleDelete = (id: any, defVal: string) => {
     setSelectedID(id);
+    setDefaultValue(defVal);
     setShowDeleteModal(true);
   };
 
@@ -47,6 +50,7 @@ const RecommendationsGroup = ({ list, title, type }: IRecommendationsGroup) => {
         item="recommendation"
       />
       <PreQuestionModal
+        defaultValue={defaultValue}
         showModal={showModal}
         setShowModal={setShowModal}
         title={"Update recommendation"}
@@ -60,7 +64,7 @@ const RecommendationsGroup = ({ list, title, type }: IRecommendationsGroup) => {
         type={type}
         title={`${title}`}
       >
-        {list.map((item: any) => {
+        {list.map((item: any, number: number) => {
           return (
             <div key={item.id}>
               <div className="flex w-full justify-between items-center p-4 space-x-4">
@@ -70,23 +74,23 @@ const RecommendationsGroup = ({ list, title, type }: IRecommendationsGroup) => {
                 </div>
                 <div className="flex space-x-4">
                   <div className="flex space-x-1">
-                    <p>30</p>
+                    <p>{item.like_counts}</p>
                     <ThumbDownIcon />
                   </div>
                   <div className="flex space-x-1">
-                    <p>60</p>
+                    <p>{item.dislike_counts}</p>
                     <ThumbUpIcon />
                   </div>
                   <button
                     onClick={() => {
-                      handleDelete(item?.id);
+                      handleDelete(item?.id, item.recommendation);
                     }}
                   >
                     <TrashIcon />
                   </button>
                   <button
                     onClick={() => {
-                      handleEdit(item?.id);
+                      handleEdit(item?.id, item.recommendation);
                     }}
                   >
                     <EditIcon />
