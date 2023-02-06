@@ -6,12 +6,14 @@ interface IHistoryCard {
   full_name: string;
   completed_recommendations_count: number;
   created_at: string;
+  avatar?: string
 }
 
 const HistoryProfileCard = ({
   full_name,
   completed_recommendations_count,
   created_at,
+  avatar
 }: IHistoryCard) => {
   return (
     <div
@@ -19,7 +21,7 @@ const HistoryProfileCard = ({
     bg-swell-light text-white "
     >
       <Image
-        src="/images/Avatar.png"
+        src={avatar || "/images/AvatarLoader.png"}
         alt="avatar"
         priority
         width={200}

@@ -102,11 +102,13 @@ class MainQuestionController extends Controller
     {
         $main_questions = MainQuestion::whereIn('pre_choice_id', collect($request)->pluck('pre_choice'))->get();
 
-        $main_choices = MainQuestion::with(['mainChoices' => function ($query) use ($main_questions) {
-            $query->whereIn('id', $main_questions->pluck('id'));
-        }])->get()->filter(function ($main_question) {
-            return count($main_question->mainChoices) > 0;
-        });
+        $main_choices = [];
+        foreach ($request->all() as $pre_choice) {
+
+            $main_choices = MainQuestion::with(['mainChoices' => function ($query) use ($main_questions) {
+                $main_questions->whereIn('pre_choice_id', $main_questions->pluck('id'));
+            }])->where('pre_choice_id', $pre_choice['pre_choice'])->get();
+        }
 
         return response()->json([
             'main_questions' => array_values($main_choices->toArray()),

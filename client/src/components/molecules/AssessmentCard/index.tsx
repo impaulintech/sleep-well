@@ -2,15 +2,17 @@ import React from "react";
 import Image from "next/image";
 
 import Button from "~/components/atoms/Button";
+import redirect from "~/shared/utils/redirect";
 
 interface IAssessmentCard {
   message: string;
   recommendations: any;
+  avatar?:string
 }
 
-const AssessmentCard = ({ recommendations, message }: IAssessmentCard) => {
+const AssessmentCard = ({ recommendations, message, avatar }: IAssessmentCard) => {
   const handleClick = () => {
-    console.log("Take assessment");
+    redirect('/pre-questions');
   };
 
   return (
@@ -19,7 +21,7 @@ const AssessmentCard = ({ recommendations, message }: IAssessmentCard) => {
     bg-swell-light text-white "
     >
       <Image
-        src="/images/Avatar.png"
+        src={avatar || "/images/AvatarLoader.png"}
         alt="avatar"
         priority
         width={200}
@@ -30,7 +32,7 @@ const AssessmentCard = ({ recommendations, message }: IAssessmentCard) => {
         <div className="text-sm font-normal">{message}</div>
         <Button
           onClick={handleClick}
-          isDisabled={recommendations?.length > 0}
+          isDisabled={!recommendations ? true : recommendations?.length > 0}
           className="border-none bg-swell-10 shadow-lg"
         >
           Take assessment

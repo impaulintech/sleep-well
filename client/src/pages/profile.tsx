@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import NextHead from "~/components/atoms/NextHead";
 import Accordion from "~/components/atoms/Accordion";
@@ -7,50 +7,34 @@ import FooterNavbar from "~/components/atoms/FooterNavbar";
 import UserSettingModal from "~/components/molecules/UserSettingsModal";
 import HistoryProfileCard from "~/components/molecules/HistoryProfileCard";
 import moment from "moment";
+import { GlobalContext } from "~/context/GlobalContext";
+import UserApi from "~/api/user/UserApi";
+import Assessment from "~/api/user/Assessment";
 
 const History = () => {
-  // dummy profile
-  const profile = {
-    full_name: "John Doe",
-    created_at: "20221101",
-    completed_recommendations_count: 21,
-  };
   const [showModal, setShowModal] = useState<boolean>(false);
-
-  const recommendations = [
-    {
-      id: 1,
-      status: "liked",
-      question: "1Lorem ipsum dolor sit amet.",
-      answer: "yes",
-      recommendation: "Lorem ipsum, dolor sit amet.",
-      like: 3,
-      dislike: 1,
-      updated_at: "20230212",
-    },
-    {
-      id: 2,
-      status: "liked",
-      question: "2Lorem ipsum dolor sit amet.",
-      recommendation: "Lorem ipsum, dolor sit amet.",
-      like: 2,
-      dislike: 1,
-      updated_at: "20230212",
-    },
-    {
-      id: 3,
-      status: "disliked",
-      question: "3Lorem ipsum dolor sit amet.",
-      answer: "yes",
-      recommendation: "Lorem ipsum, dolor sit amet.",
-      like: 1,
-      dislike: 1,
-      updated_at: "20230212",
-    },
-  ];
+  const { completedRecomm, auth } = useContext(GlobalContext) as any;
+  const [completedRecommendations, setCompletedRecommendations] = completedRecomm;
+  const [authUser, setAuthUser] = auth; 
+  const recommendations = completedRecommendations?.completed
 
   const handleClick = () => {
     setShowModal(true);
+  };
+  
+  useEffect(()=>{
+    Assessment.getRecommendations().then((res) => {  
+      setCompletedRecommendations(res?.data);
+    });
+    UserApi.getUser().then((res)=>{
+      setAuthUser(res.data)
+    })
+  },[])
+  // dummy profile
+  const profile = {
+    full_name: authUser?.full_name || "Loading...",
+    created_at: authUser?.created_at || "20220909",
+    completed_recommendations_count: recommendations?.length,
   };
 
   return (
@@ -72,6 +56,7 @@ const History = () => {
           completed_recommendations_count={
             profile.completed_recommendations_count
           }
+          avatar={authUser?.avatar}
         />
 
         {/* Recommendation content */}
@@ -81,7 +66,7 @@ const History = () => {
 
         <section className="flex flex-col space-y-2">
           {recommendations?.length > 0 ? (
-            recommendations.map((recommendation) => {
+            recommendations?.map((recommendation: any) => {
               return (
                 <div key={recommendation.id}>
                   <Accordion

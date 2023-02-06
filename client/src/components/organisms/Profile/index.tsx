@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Input from "~/components/atoms/Input";
 import Button from "~/components/atoms/Button";
@@ -7,8 +7,11 @@ import Dropdown from "~/components/atoms/Dropdown";
 import RefreshIcon from "~/shared/icons/RefreshIcon";
 import UserApi from "~/api/user/UserApi";
 import { toast } from "react-hot-toast";
+import { GlobalContext } from "~/context/GlobalContext";
 
 const Profile = () => {
+  const { auth } = useContext(GlobalContext) as any; 
+  const [authUser, setAuthUser] = auth; 
   const initialParams = {
     full_name: "",
     email: "",
@@ -17,6 +20,7 @@ const Profile = () => {
   };
 
   const [avatar, setAvatar] = useState("");
+  const [email, setEmail] = useState("");
   const [params, setParams] = useState(initialParams);
   const genders = [
     { id: 1, label: "Male" },
@@ -29,7 +33,9 @@ const Profile = () => {
     UserApi.getUser().then((res: any) => {
       const { full_name, age, gender, email, avatar } = res.data;
       setAvatar(avatar);
-      setParams({ ...params, full_name, age, gender, email });
+      setEmail(email)
+      setAuthUser(res.data)
+      setParams({ ...params, full_name, age, gender });
     });
   }, []);
 
@@ -40,11 +46,14 @@ const Profile = () => {
   const handleUpdateAvatar = () => {
     UserApi.updateAvatar(true).then((res) => {
       setAvatar(res.data.data.avatar);
+      setAuthUser(res.data.data)
     });
   };
 
   const handleSubmit = () => {
-    toast.promise(UserApi.updateUser(params), {
+    toast.promise(UserApi.updateUser(params).then((res)=>{ 
+      setAuthUser(res.data.data)
+    }), {
       loading: "Saving...",
       success: "User information updated",
       error: (err) => `${err.response.data.message}`,
@@ -74,11 +83,11 @@ const Profile = () => {
           placeholder="John Doe"
           onChange={handleChange}
         />
-        <Input
-          value={params?.email}
+        <Input 
+          value=""
           label="Email address"
           name="email"
-          placeholder="john.doe@email.com"
+          placeholder={email}
           onChange={handleChange}
         />
         <div className="flex space-x-2">

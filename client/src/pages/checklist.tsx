@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import NextHead from "~/components/atoms/NextHead";
 import Accordion from "~/components/atoms/Accordion";
@@ -6,28 +6,35 @@ import SettingsIcon from "~/shared/icons/SettingsIcon";
 import FooterNavbar from "~/components/atoms/FooterNavbar";
 import AssessmentCard from "~/components/molecules/AssessmentCard";
 import UserSettingModal from "~/components/molecules/UserSettingsModal";
+import { GlobalContext } from "~/context/GlobalContext";
+import Assessment from "~/api/user/Assessment";
+import UserApi from "~/api/user/UserApi";
 
 export default function Home() {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const { latestRecomm, auth } = useContext(GlobalContext) as any;
+  const [latestRecommendations, setLatestRecommendations] = latestRecomm; 
+  const [authUser, setAuthUser] = auth; 
 
-  const recommendations = [
-    {
-      id: 1,
-      question: "1Lorem ipsum dolor sit amet.",
-      answer: "yes",
-      recommendation: "Lorem ipsum, dolor sit amet.",
-      like: 3,
-      dislike: 1,
-    }
-  ];
+  const recommendations = latestRecommendations?.latest || [];
+
   const message =
-    recommendations.length === 0
+    recommendations?.length === 0
       ? "You completed all the recommendations for better sleep habits. "
       : "Complete all recommendations before taking new assessment for better sleep habits.";
 
   const handleClick = () => {
     setShowModal(true);
   };
+  
+  useEffect(() => {
+    Assessment.getRecommendations().then((res) => {
+      setLatestRecommendations(res?.data);
+    });
+    UserApi.getUser().then((res)=>{
+      setAuthUser(res.data)
+    })
+  }, []);
 
   return (
     <>
@@ -42,7 +49,7 @@ export default function Home() {
         </div>
 
         {/* Top section */}
-        <AssessmentCard recommendations={recommendations} message={message} />
+        <AssessmentCard recommendations={recommendations} message={message} avatar={authUser?.avatar}/>
 
         {/* Recommendation content */}
         <h1 className="text-xl font-medium border-b-2">
@@ -51,23 +58,25 @@ export default function Home() {
 
         <section className="flex flex-col space-y-2">
           {recommendations?.length > 0 ? (
-            recommendations.map((recommendation) => {
+            recommendations.map((recommendation: any, index: number) => {
               return (
-                <div key={recommendation.id}>
+                <div key={index}>
                   <Accordion status="inProgress" title="In Progress">
                     <div className="flex flex-col space-y-4 pb-4">
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">
                           Question:
                         </h3>
-                        <p className="text-base">{recommendation.question}</p>
+                        <p className="text-base">
+                          {recommendation?.main_question}
+                        </p>
                       </div>
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">
                           Your Answer:
                         </h3>
                         <p className="text-base">
-                          {recommendation.answer.toUpperCase()}
+                          {recommendation?.main_choice?.toUpperCase()}
                         </p>
                       </div>
                       <div className="flex flex-col space-y-2">
@@ -75,7 +84,7 @@ export default function Home() {
                           Recommendation:
                         </h3>
                         <p className="text-base">
-                          {recommendation.recommendation}
+                          {recommendation?.recommendation}
                         </p>
                       </div>
                     </div>
@@ -90,7 +99,7 @@ export default function Home() {
           )}
         </section>
         {/* footer */}
-        <FooterNavbar activePage="checklist"/>
+        <FooterNavbar activePage="checklist" />
       </div>
     </>
   );

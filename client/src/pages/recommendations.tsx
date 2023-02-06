@@ -1,13 +1,14 @@
 import { NextPage } from "next";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Card from "~/components/atoms/Card";
 import { GlobalContext } from "~/context/GlobalContext";
 import Recommendation from "~/components/templates/Recommendation";
 
 const Recommendations: NextPage = (): JSX.Element => {
-  const { recommendation } = useContext(GlobalContext) as any;
+  const { recommendation, latestRecomm } = useContext(GlobalContext) as any;
   const [recommendations] = recommendation;
+  const [_, setLatestRecommendations] = latestRecomm;
   const { latest } = recommendations || [];
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -16,6 +17,10 @@ const Recommendations: NextPage = (): JSX.Element => {
   const handleNext = () => {
     setCurrentPage(currentPage + 1);
   };
+
+  useEffect(() => { 
+    setLatestRecommendations(latest);
+  }, []);
 
   return (
     <>

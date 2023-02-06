@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import UserApi from "~/api/user/UserApi";
 
 interface IGlobalContextProvider {
   children: React.ReactNode;
@@ -6,8 +7,7 @@ interface IGlobalContextProvider {
 
 export const GlobalContext = createContext<any>({});
 
-export const GlobalContextProvider = ({ children }: IGlobalContextProvider) => {
-  const [count, setCount] = useState(0);
+export const GlobalContextProvider = ({ children }: IGlobalContextProvider) => { 
   const [main_questions, set_main_questions] = useState<any>([
     {
       main_question: "Loading...",
@@ -20,12 +20,18 @@ export const GlobalContextProvider = ({ children }: IGlobalContextProvider) => {
     },
   ]);
   const [givenRecommendations, setGivenRecommendations] = useState<any>();
-
+  const [latestRecommendations, setLatestRecommendations] = useState<any>();
+  const [completedRecommendations, setCompletedRecommendations] = useState<any>();
+  const [authUser, setAuthUser] = useState<any>(); 
+  
   return (
     <GlobalContext.Provider
       value={{
+        auth: [authUser, setAuthUser],
         main: [main_questions, set_main_questions],
         recommendation: [givenRecommendations, setGivenRecommendations],
+        latestRecomm: [latestRecommendations, setLatestRecommendations],
+        completedRecomm: [completedRecommendations, setCompletedRecommendations],
       }}
     >
       {children}
