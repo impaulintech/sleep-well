@@ -57,7 +57,6 @@ const RecommendationsGroup = ({ list, title, type }: IRecommendationsGroup) => {
         data={{ type: "recommendation", id: selectedID }}
         method={method}
       />
-      ;
       <Accordion
         hasAdd={false}
         handleAdd={handleAdd}
