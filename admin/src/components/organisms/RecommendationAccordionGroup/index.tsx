@@ -74,11 +74,11 @@ const RecommendationsGroup = ({ list, title, type }: IRecommendationsGroup) => {
                 </div>
                 <div className="flex space-x-4">
                   <div className="flex space-x-1">
-                    <p>{item.like_counts}</p>
+                    <p>{item.dislike_counts}</p>
                     <ThumbDownIcon />
                   </div>
                   <div className="flex space-x-1">
-                    <p>{item.dislike_counts}</p>
+                    <p>{item.like_counts}</p>
                     <ThumbUpIcon />
                   </div>
                   <button
