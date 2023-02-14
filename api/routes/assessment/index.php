@@ -22,4 +22,5 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/assessment'], functi
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/admin'], function () {
     Route::resource('/assessment', AdminManagementController::class);
+    Route::get('/manage-users', [AdminManagementController::class, 'getAllUsersData']);
 });
