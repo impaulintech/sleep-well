@@ -14,6 +14,10 @@ const UserApi = {
     return instance.get("/admin/assessment");
   },
 
+  getUsersAssessment: () => {
+    return instance.get("/admin/manage-users");
+  },
+
   createPreQuestion: (data: any) => {
     return instance.post("/assessment/pre-questions", data);
   },

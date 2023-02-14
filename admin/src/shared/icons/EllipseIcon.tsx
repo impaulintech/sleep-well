@@ -17,6 +17,9 @@ const EllipseIcon = ({
     mainQuestion: "#3D2988",
     mainChoice: "#E05D5D",
     recommendation: "#FF00E5",
+    success: "#2DDA1E",
+    warning: "#CCB330",
+    failed: "#CC3030",
   };
   const currentState = ellpiseColors[type];
 

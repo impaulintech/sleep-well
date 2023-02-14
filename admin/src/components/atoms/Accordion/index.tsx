@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { Disclosure } from "@headlessui/react";
 
@@ -9,21 +10,25 @@ import EllipsePlusIcon from "~/shared/icons/EllipsePlusIcon";
 interface IAccordion {
   title: string;
   children: React.ReactNode;
-  type: string;
+  type?: string;
   hasAdd?: boolean;
   hasDelete?: boolean;
   handleAdd?: any;
   handleDelete?: any; 
+  avatar?: string;
+  avatar_state?: boolean;
 }
 
 const Accordion = ({
   title,
   children,
-  type,
+  type = "preQuestion",
   hasAdd = false,
   hasDelete = false,
   handleAdd,
   handleDelete, 
+  avatar,
+  avatar_state = false
 }: IAccordion) => {
   return (
     <Disclosure>
@@ -32,8 +37,8 @@ const Accordion = ({
           <div className="flex w-full justify-between items-center space-x-4 p-4 rounded-lg bg-swell-dark text-white shadow-md">
             <Disclosure.Button className="relative flex w-full justify-between items-center">
               <div className="flex items-center space-x-3">
-                <EllipseIcon type={type} />
-                <div className="text-xl font-medium">{title}</div>
+                {avatar_state ? <img src={avatar || '/images/logo.png'} alt="avatar" width={39} className="z-0"/> : <EllipseIcon type={type} />} 
+                <div className="text-lg font-medium text-start">{title}</div>
               </div>
             </Disclosure.Button>
             <div className="flex items-center space-x-4">
