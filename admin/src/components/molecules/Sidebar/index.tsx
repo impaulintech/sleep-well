@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import AuthApi from "~/api/admin/AuthApi";
 import { deleteCookie } from "cookies-next";
@@ -8,9 +8,11 @@ import SettingsModal from "../SettingsModal";
 import LogoutIcon from "~/shared/icons/LogoutIcon";
 import SettingsIcon from "~/shared/icons/SettingsIcon";
 import redirect from "~/shared/utils/redirect";
+import UserGroupIcon from "~/shared/icons/UserGroupIcon";
 
 const Sidebar = ({ toggleCollapse }: any) => {
   const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false);
+  const [activePath, setActivePath] = useState<string>(''); 
 
   const handleLogout = () => {
     toast.promise(
@@ -30,6 +32,10 @@ const Sidebar = ({ toggleCollapse }: any) => {
     setShowSettingsModal(true);
   };
 
+  useEffect(()=>{
+    setActivePath(window.location.pathname)
+  }, [])
+
   return (
     <>
       <SettingsModal
@@ -40,9 +46,21 @@ const Sidebar = ({ toggleCollapse }: any) => {
         <div
           className={`h-full pt-14 bg-swell-vdark text-white justify-between flex flex-col flex-1 sm:flex-none`}
         >
-          <div className="flex w-full items-center space-x-2 px-6 py-4 text-base bg-swell-10">
-            <GearIcon />
-            <p>Recommendations</p>
+          <div>
+            <div className={`flex w-full items-center space-x-2 px-6 py-4 text-base cursor-pointer ${activePath === '/dashboard' && 'bg-swell-10'}`} onClick={()=> {
+              setActivePath('/dashboard')
+              redirect('/dashboard')
+            }}>
+              <GearIcon />
+              <p>Recommendations</p>
+            </div>
+            <div className={`flex w-full items-center space-x-2 px-6 py-4 text-base cursor-pointer ${activePath === '/manage-user' && 'bg-swell-10'}`} onClick={()=> {
+              setActivePath('/manage-user')
+              redirect('/manage-user')
+            }}>
+              <UserGroupIcon fill="#FFFFFF"/>
+              <p>Manage Users</p>
+            </div>
           </div>
           <div className="border-t">
             <button
