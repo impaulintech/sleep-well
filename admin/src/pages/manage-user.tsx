@@ -7,7 +7,7 @@ import UserApi from "~/api/admin/UserApi";
 import { GlobalContext } from "~/context/GlobalContext";  
 import DynamicAccordionGroups from "~/components/templates/DynamicAccordionGroups";
 
-const Dashboard = () => {
+const ManageUser = () => {
   const { assessment } = useContext(GlobalContext) as any;
   const [usersData, setUsersData] = assessment; 
   const [showModal, setShowModal] = useState(false);
@@ -44,4 +44,4 @@ const Dashboard = () => {
 };
 
 export { AdminSignInOutAuthCheck as getServerSideProps } from "~/utils/getServerSideProps";
-export default Dashboard;
+export default ManageUser;

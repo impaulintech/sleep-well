@@ -2,7 +2,7 @@ export const AdminSignInOutAuthCheck = async ({ req }: any) => {
   const token = req?.cookies["token"];
   const path = req?.url;
 
-  const privateRoutes = [path.includes("/dashboard")];
+  const privateRoutes = [path.includes("/dashboard"), path.includes("/manage-user")]; 
   const publicRoutes = [path == "/"];
 
   if (publicRoutes.includes(true) && !token) return { props: {} };
