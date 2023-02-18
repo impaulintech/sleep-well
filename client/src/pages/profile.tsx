@@ -101,7 +101,9 @@ const History = () => {
                           Recommendation:
                         </h3>
                         <p className="text-base">
-                          {recommendation?.recommendation}
+                          {recommendation?.recommendation === null
+                            ? "If the recommendations we gave you did not help you, you can take another assessment, or it is better to see a sleep doctor. Maybe the symptoms that you feel need serious treatment."
+                            : recommendation?.recommendation}
                         </p>
                       </div>
                     </div>

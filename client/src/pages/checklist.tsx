@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 
 import NextHead from "~/components/atoms/NextHead";
@@ -13,8 +14,8 @@ import UserApi from "~/api/user/UserApi";
 export default function Home() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { latestRecomm, auth } = useContext(GlobalContext) as any;
-  const [latestRecommendations, setLatestRecommendations] = latestRecomm; 
-  const [authUser, setAuthUser] = auth; 
+  const [latestRecommendations, setLatestRecommendations] = latestRecomm;
+  const [authUser, setAuthUser] = auth;
 
   const recommendations = latestRecommendations?.latest || [];
 
@@ -26,14 +27,14 @@ export default function Home() {
   const handleClick = () => {
     setShowModal(true);
   };
-  
+
   useEffect(() => {
     Assessment.getRecommendations().then((res) => {
       setLatestRecommendations(res?.data);
     });
-    UserApi.getUser().then((res)=>{
-      setAuthUser(res.data)
-    })
+    UserApi.getUser().then((res) => {
+      setAuthUser(res.data);
+    });
   }, []);
 
   return (
@@ -49,7 +50,11 @@ export default function Home() {
         </div>
 
         {/* Top section */}
-        <AssessmentCard recommendations={recommendations} message={message} avatar={authUser?.avatar}/>
+        <AssessmentCard
+          recommendations={recommendations}
+          message={message}
+          avatar={authUser?.avatar}
+        />
 
         {/* Recommendation content */}
         <h1 className="text-xl font-medium border-b-2">
@@ -61,7 +66,11 @@ export default function Home() {
             recommendations.map((recommendation: any, index: number) => {
               return (
                 <div key={index}>
-                  <Accordion status="inProgress" title="In Progress" data={recommendation}>
+                  <Accordion
+                    status="inProgress"
+                    title="In Progress"
+                    data={recommendation}
+                  >
                     <div className="flex flex-col space-y-4 pb-4">
                       <div className="flex flex-col space-y-2">
                         <h3 className="text-xl font-medium text-swell-30">
@@ -84,7 +93,9 @@ export default function Home() {
                           Recommendation:
                         </h3>
                         <p className="text-base">
-                          {recommendation?.recommendation}
+                          {recommendation?.recommendation === null
+                            ? "If the recommendations we gave you did not help you, you can take another assessment, or it is better to see a sleep doctor. Maybe the symptoms that you feel need serious treatment."
+                            : recommendation?.recommendation}
                         </p>
                       </div>
                     </div>

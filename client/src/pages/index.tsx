@@ -37,7 +37,7 @@ const Login: NextPage = (): JSX.Element => {
       {
         loading: "Loading",
         success: (data) => "Successfully logged in",
-        error: (err) => `${err.response.data.message}`,
+        error: (err) => `${err?.response?.data?.message}`,
       }
     );
   };

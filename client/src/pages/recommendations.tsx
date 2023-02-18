@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { NextPage } from "next";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -18,7 +19,7 @@ const Recommendations: NextPage = (): JSX.Element => {
     setCurrentPage(currentPage + 1);
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     setLatestRecommendations(latest);
   }, []);
 
@@ -50,7 +51,11 @@ const Recommendations: NextPage = (): JSX.Element => {
         </div>
         <Card
           title="Recommendation"
-          message={latest && latest[currentPage]?.recommendation}
+          message={
+            latest && latest[currentPage]?.recommendation
+              ? latest[currentPage]?.recommendation
+              : "If the recommendations we gave you did not help you, you can take another assessment, or it is better to see a sleep doctor. Maybe the symptoms that you feel need serious treatment."
+          }
         />
       </Recommendation>
     </>
