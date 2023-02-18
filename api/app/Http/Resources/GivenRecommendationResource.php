@@ -25,7 +25,7 @@ class GivenRecommendationResource extends JsonResource
             'is_completed' => $this->is_completed,
             'main_question' => MainQuestion::findOrFail($this->main_question_id)->main_question,
             'main_choice' => MainChoice::findOrFail($this->main_choice_id)->main_choice,
-            'recommendation' => Recommendation::findOrFail($this->recommendation_id)->recommendation,
+            'recommendation' => Recommendation::find($this->recommendation_id) ? Recommendation::find($this->recommendation_id)->recommendation : null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
