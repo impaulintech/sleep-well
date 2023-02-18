@@ -23,13 +23,13 @@ const Accordion = ({
   isDisabledButtons = false,
   data,
 }: IAccordion) => {
-  const { like, dislike, id } = data || {};
+  const { like, dislike, id, recommendation } = data || {};
 
   const { latestRecomm } = useContext(GlobalContext) as any;
   const [_, setLatestRecommendations] = latestRecomm;
-
+  
   return (
-    <div className=" ">
+    <div>
       <Disclosure>
         {({ open }) => (
           <>
@@ -48,7 +48,7 @@ const Accordion = ({
               </Disclosure.Button>
               <div className="flex space-x-4">
                 {dislike == true ? (
-                  <button
+                  <button className={recommendation === null ? "hidden" : ""}
                     disabled={isDisabledButtons}
                     onClick={() => {
                       Assessment.reactRecommendation(id, { like: false }).then(
@@ -64,7 +64,7 @@ const Accordion = ({
                     <ThumbDownIcon isActive={dislike == true} />
                   </button>
                 ) : (
-                  <button
+                  <button className={recommendation === null ? "hidden" : ""}
                     disabled={isDisabledButtons}
                     onClick={() => {
                       Assessment.reactRecommendation(id, { like: false }).then(
