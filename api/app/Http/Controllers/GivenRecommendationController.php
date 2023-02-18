@@ -44,10 +44,7 @@ class GivenRecommendationController extends Controller
             $selected_main_choice = $mainQuestion['main_choice_id'];
 
             $taken_recommendations = GivenRecommendation::where('user_id', $user_id)->where('is_completed', true)->pluck('recommendation_id');
-            $availableRecommendations = Recommendation::where('main_choice_id', $selected_main_choice)->get();
             $filteredRecommendations = Recommendation::where('main_choice_id', $selected_main_choice)->whereNotIn('id', $taken_recommendations)->get();
-            $recommendationLastIndex = $availableRecommendations[count($availableRecommendations) - 1]->id;
-            $randomRecommendation = rand($availableRecommendations[0]->id, $recommendationLastIndex);
 
             $bestRecommendationId = 0;
             $bestRecommendation = 0;
@@ -59,12 +56,11 @@ class GivenRecommendationController extends Controller
                     $bestRecommendationId = $recommendation->id;
                 }
             }
-
             GivenRecommendation::create([
                 'user_id' => $user_id,
                 'main_question_id' => $active_main_question,
                 'main_choice_id' => $selected_main_choice,
-                'recommendation_id' => $bestRecommendationId ?: $randomRecommendation
+                'recommendation_id' => $bestRecommendationId ?: null
             ]);
         }
 

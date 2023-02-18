@@ -29,6 +29,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->foreignId('recommendation_id')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();

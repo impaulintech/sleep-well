@@ -61,7 +61,7 @@ class GivenRecommendationSeeder extends Seeder
                             'user_id' => $activeUser,
                             'main_question_id' => $activeMainQuestion,
                             'main_choice_id' => $selectedMainChoice,
-                            'recommendation_id' => $bestRecommendationId ?: $randomRecommendation
+                            'recommendation_id' => $bestRecommendationId ?: null
                         ]);
                     }
                 }

@@ -29,6 +29,7 @@ class AdminManagementController extends Controller
                 "total_pre_questions" => count(PreQuestion::get()),
                 "total_pre_choices" => count(PreChoice::get()),
                 "total_main_questions" => count(MainQuestion::get()),
+                "total_main_choices" => MainChoice::get()->count(),
                 "total_recommendations" => count(Recommendation::get()),
             ],
         ], 200);
@@ -78,27 +79,45 @@ class AdminManagementController extends Controller
             ];
         }
 
-        return response()->json(['data' => $result]);
+        return response()->json([
+            "data" => [
+                "total_users" => User::get()->count(),
+                "total_assessment_takers" => count(GivenRecommendation::distinct()->pluck('user_id')),
+                "total_recommended_likers" => count(GivenRecommendation::where('like', true)->get()),
+                "total_recommended_dislikers" => count(GivenRecommendation::where('dislike', true)->get()),
+            ],
+            'userData' => $result
+        ]);
     }
 
-    public function getAssessmentData ($recommendation)
+    public function getAssessmentData($recommendation)
     {
         return [
-            'pre_question' => PreQuestion::where('id',
-                PreChoice::where('id',
-                MainQuestion::where('id',
-                $recommendation->main_question_id)
-                ->first()->pre_choice_id)
-                ->first()->pre_question_id)
+            'pre_question' => PreQuestion::where(
+                'id',
+                PreChoice::where(
+                    'id',
+                    MainQuestion::where(
+                        'id',
+                        $recommendation->main_question_id
+                    )
+                        ->first()->pre_choice_id
+                )
+                    ->first()->pre_question_id
+            )
                 ->first()->pre_question,
-            'pre_choice' => PreChoice::where('id',
-                MainQuestion::where('id',
-                $recommendation->main_question_id)
-                ->first()->pre_choice_id)
+            'pre_choice' => PreChoice::where(
+                'id',
+                MainQuestion::where(
+                    'id',
+                    $recommendation->main_question_id
+                )
+                    ->first()->pre_choice_id
+            )
                 ->first()->pre_choice,
             'main_question' => MainQuestion::where('id', $recommendation->main_question_id)->first()->main_question,
             'main_choice' => MainChoice::where('id', $recommendation->main_choice_id)->first()->main_choice,
-            'recommendation' => $recommendation->recommendation->recommendation,
+            'recommendation' => $recommendation->recommendation === null ? null : $recommendation->recommendation->recommendation,
         ];
     }
 
