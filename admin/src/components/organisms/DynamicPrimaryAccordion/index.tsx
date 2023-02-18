@@ -120,7 +120,7 @@ const DynamicPrimaryAccordion = ({ usersData, title, type, number }: any) => {
                               Recommendation:
                             </h1>
                             <p className="text-lg font-medium">
-                              {recommendation}
+                              {recommendation ? recommendation : "If the recommendations we gave you did not help you, you can take another assessment, or it is better to see a sleep doctor. Maybe the symptoms that you feel need serious treatment."}
                             </p>
                           </div>
                         </div>
@@ -175,7 +175,7 @@ const DynamicPrimaryAccordion = ({ usersData, title, type, number }: any) => {
                               Recommendation:
                             </h1>
                             <p className="text-lg font-medium">
-                              {recommendation}
+                              {recommendation ? recommendation : "If the recommendations we gave you did not help you, you can take another assessment, or it is better to see a sleep doctor. Maybe the symptoms that you feel need serious treatment."}
                             </p>
                           </div>
                         </div>
@@ -230,7 +230,7 @@ const DynamicPrimaryAccordion = ({ usersData, title, type, number }: any) => {
                               Recommendation:
                             </h1>
                             <p className="text-lg font-medium">
-                              {recommendation}
+                              {recommendation ? recommendation : "If the recommendations we gave you did not help you, you can take another assessment, or it is better to see a sleep doctor. Maybe the symptoms that you feel need serious treatment."}
                             </p>
                           </div>
                         </div>
